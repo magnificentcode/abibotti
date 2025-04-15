@@ -1,11 +1,17 @@
 FROM dart:stable
 
+# Crée le répertoire de l'app
 WORKDIR /app
+
+# Copie le code Dart
 COPY . .
 
+# Récupère les dépendances
 RUN dart pub get
 
+# Expose le port attendu par Railway
+ENV PORT=8080
 EXPOSE 8080
-CMD ["dart", "run", "dart_frog", "dev", "--hostname", "0.0.0.0", "--port", "8080"]
 
-
+# Lance le serveur Dart Frog
+CMD ["dart", "run", "bin/dart_frog.dart"]
