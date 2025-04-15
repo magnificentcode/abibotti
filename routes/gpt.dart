@@ -42,7 +42,8 @@ Tu dois absolument répondre en **finnois**.
     Uri.parse('https://api.openai.com/v1/chat/completions'),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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',
+      'Authorization': 'Bearer ${Platform.environment['OPENAI_API_KEY']}',
+
     },
     body: jsonEncode({
       'model': 'gpt-4',

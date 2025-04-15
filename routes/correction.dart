@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'dart:io'; // ✅ pour Platform.environment
 import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
-// 🔐 Clé OpenAI (à sécuriser pour la prod)
-const openAiKey = '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';
+// 🔐 Clé OpenAI depuis l'environnement
+final openAiKey = Platform.environment['OPENAI_API_KEY'];
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method == HttpMethod.options) {
