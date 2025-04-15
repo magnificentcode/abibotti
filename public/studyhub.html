@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyHub | Abibotti</title>
+
+  <!-- 📚 MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- 🎨 Styles & Fonts -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- 📦 jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <!-- 🔝 Navigation -->
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="/" class="logo">
+        <img src="/assets/img/abibotti_loopu.png" alt="Abibotti Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/studyhub.html">Yo-Koe</a></li>
+        <li><a href="/contact.html">Ota yhteyttä</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="studyhub">
+
+    <!-- 🧠 Titre -->
+    <p class="head">Harjoittele Abibottilla</p>
+
+    <!-- 📚 Sélection -->
+    <div class="selectors">
+      <label for="matiere">:</label>
+      <select id="matiere" required>
+        <option value="" disabled selected>Valitse oppiaine</option>
+        <option value="biologia">Biologia</option>
+          <option value="elamankatsomustieto">Elämänkatsomustieto</option>
+          <option value="englanti_lyhyt">Englanti, lyhyt oppimäärä</option>
+          <option value="englanti_pitka">Englanti, pitkä oppimäärä</option>
+          <option value="espanja_lyhyt">Espanja, lyhyt oppimäärä</option>
+          <option value="espanja_pitka">Espanja, pitkä oppimäärä</option>
+          <option value="ranska_pitka">Ranska, pitkä oppimäärä</option>
+          <option value="ruotsi_keskipitka">Ruotsi, keskipitkä oppimäärä</option>
+          <option value="ruotsi_pitka">Ruotsi, pitkä oppimäärä</option>
+          <option value="saksa_lyhyt">Saksa, lyhyt oppimäärä</option>
+          <option value="saksa_pitka">Saksa, pitkä oppimäärä</option>
+          <option value="suomi_toisena_kielena">Suomi toisena kielenä</option>
+          <option value="terveystieto">Terveystieto</option>
+          <option value="venaja_lyhyt">Venäjä, lyhyt oppimäärä</option>
+          <option value="venaja_pitka">Venäjä, pitkä oppimäärä</option>
+          <option value="yhteiskuntaoppi">Yhteiskuntaoppi</option>
+        
+          <!-- 📝 Äidinkieli -->
+          <option value="aidinkieli_kirjoitustaito">Äidinkieli, suomi, kirjoitustaito</option>
+          <option value="aidinkieli_lukutaito">Äidinkieli, suomi, lukutaidon koe</option>
+        
+          <!-- ✝️ Religion -->
+          <option value="evankelisluterilainen_uskonto">Evankelis-luterilainen uskonto</option>
+          <option value="ortodoksinen_uskonto">Ortodoksinen uskonto</option>
+        
+          <!-- 📚 Autres matières scolaires -->
+          <option value="filosofia">Filosofia</option>
+          <option value="fysiikka">Fysiikka</option>
+          <option value="historia">Historia</option>
+          <option value="kemia">Kemia</option>
+          <option value="maantiede">Maantiede</option>
+          <option value="psykologia">Psykologia</option>
+          <option value="matematiikka_lyhyt">Matematiikka, lyhyt oppimäärä</option>
+          <option value="matematiikka_pitka">Matematiikka, pitkä oppimäärä</option>
+          <option value="latina_lyhyt">Latina, lyhyt oppimäärä</option>
+          <option value="latina_pitka">Latina, pidempi oppimäärä</option>
+        
+          <!-- 🦻 Kuulovammaiset -->
+          <option value="kuulovammaiset_eng_lyhyt">Kuulovammaisten koe, englanti, lyhyt oppimäärä</option>
+          <option value="kuulovammaiset_eng_pitka">Kuulovammaisten koe, englanti, pitkä oppimäärä</option>
+          <option value="kuulovammaiset_saksa_lyhyt">Kuulovammaisten koe, saksa, lyhyt oppimäärä</option>
+          <option value="kuulovammaiset_suomi_toinen">Kuulovammaisten koe, suomi toisena kielenä ja kirjallisuus</option>
+          <option value="kuulovammaiset_toinen_kotimainen">Kuulovammaisten koe, toinen kotimainen kieli, pitkä oppimäärä</option>
+        
+          <!-- 👁️ Näkövammaiset -->
+          <option value="nakovammaiset_biologia">Näkövammaiset, biologia</option>
+          <option value="nakovammaiset_eng_lyhyt">Näkövammaiset, englanti, lyhyt oppimäärä</option>
+          <option value="nakovammaiset_eng_pitka">Näkövammaiset, englanti, pitkä oppimäärä</option>
+          <option value="nakovammaiset_evankelisluterilainen_uskonto">Näkövammaiset, evankelisluterilainen uskonto</option>
+          <option value="nakovammaiset_historia">Näkövammaiset, historia</option>
+          <option value="nakovammaiset_maantiede">Näkövammaiset, maantiede</option>
+          <option value="nakovammaiset_matikka_lyhyt">Näkövammaiset, matematiikka, lyhyt oppimäärä</option>
+          <option value="nakovammaiset_matikka_pitka">Näkövammaiset, matematiikka, pitkä oppimäärä</option>
+          <option value="nakovammaiset_psykologia">Näkövammaiset, psykologia</option>
+          <option value="nakovammaiset_ranska_lyhyt">Näkövammaiset, ranska, lyhyt oppimäärä</option>
+          <option value="nakovammaiset_ruotsi_keskipitka">Näkövammaiset, ruotsi, keskipitkä oppimäärä</option>
+          <option value="nakovammaiset_yhteiskuntaoppi">Näkövammaiset, yhteiskuntaoppi</option>
+          <option value="nakovammaiset_aidinkieli_kirjoitustaito">Näkövammaiset, äidinkieli, kirjoitustaidon koe</option>
+          <option value="nakovammaiset_aidinkieli_lukutaito">Näkövammaiset, äidinkieli, lukutaidon koe</option>
+      </select>
+
+      <label for="subject">:</label>
+      <select id="subject" required>
+        <option value="" disabled selected>Valitse koevuosi</option>
+        <option value="2022-syksy">Syksy 2022</option>
+        <option value="2022-kevat">Kevät 2022</option>
+        <option value="2021-syksy">Syksy 2021</option>
+        <option value="2021-kevat">Kevät 2021</option>
+        <option value="2020-syksy">Syksy 2020</option>
+        <option value="2020-kevat">Kevät 2020</option>
+      </select>
+
+      <button id="generate-backend-question" class="primary-btn">Generoi kysymys</button>
+    </div>
+
+    <!-- 📝 Question affichée -->
+    <div id="loader" class="loader" style="display: none;"></div>
+    <div id="question-box" class="question-box"></div>
+    <input type="hidden" id="current-question" /> <!-- ⬅️ stocke la question générée -->
+
+    <!-- ✍️ Éditeur de réponse -->
+    <div id="content-area">
+
+      <!-- 🧮 Barre d'outils LaTeX -->
+      <div class="math-toolbar">
+        <button data-insert="\\frac{}{}">Fraction</button>
+        <button data-insert="\\sqrt{}">√ Root</button>
+        <button data-insert="x^{}">xⁿ</button>
+        <button data-insert="\\int">∫</button>
+        <button data-insert="\\sum">∑</button>
+        <button data-insert="\\pi">π</button>
+      </div>
+
+      <!-- 📓 Zone rédactionnelle -->
+      <div id="answer-editor" class="rich-editor" contenteditable="true" spellcheck="false" aria-label="Réponse de l'élève"></div>
+
+      <!-- 🧭 Boutons d'action -->
+      <div class="editor-actions">
+        <button id="submit-answer" class="action-button">Vastaa</button>
+        <button id="ask-help" class="action-button">Pyydä apua tekoälyltä</button>
+      </div>
+
+      <!-- ✅ Résultat IA -->
+      <div class="ai-feedback">
+        <h3>AI Feedback:</h3>
+        <div id="feedback-area">Your answer will be analyzed here.</div>
+      </div>
+
+      <!-- 📐 Popup LaTeX -->
+      <div id="equation-popup" class="equation-popup" style="display: none;">
+        <div id="equation-list" class="equation-list"></div>
+        <input type="text" id="equation-input" placeholder="Entrez une équation LaTeX ici (ex: 46x+9=18)">
+        <button id="insert-equation" class="primary-btn">Insérer</button>
+        <div id="equation-preview" class="render-box"></div>
+      </div>
+
+    </div> <!-- /content-area -->
+
+  </main>
+
+  <!-- 📜 Script principal -->
+  <script src="main.js"></script>
+</body>
+</html>
