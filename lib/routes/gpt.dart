@@ -1,3 +1,5 @@
+import 'dart:io'; // pour Platform.environment
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:convert' show utf8;
 import 'package:dart_frog/dart_frog.dart';

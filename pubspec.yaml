@@ -7,3 +7,4 @@ environment:
 
 dependencies:
   dart_frog: ^1.0.0
+  http: ^0.13.6
