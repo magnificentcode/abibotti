@@ -17,9 +17,7 @@ jobs:
         run: npm install -g railway
 
       - name: Login to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.ABI }}
-        run: railway login --token $ABI
+        run: railway login --token ${{ secrets.ABI }}
 
       - name: Deploy to Railway
-        run: railway up --service ABIBOTTI
+        run: railway up
