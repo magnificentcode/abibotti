@@ -13,5 +13,5 @@ RUN dart pub get
 ENV PORT=8080
 EXPOSE 8080
 
-# Lance le serveur Dart Frog
-CMD ["dart", "run", "bin/dart_frog.dart"]
+# Lance le serveur Dart Frog avec le bon fichier
+CMD ["sh", "-c", "dart run bin/dart_frog.dart --port \$PORT"]

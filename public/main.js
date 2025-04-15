@@ -22,7 +22,7 @@ function setCurrentQuestion(questionText) {
     contentArea.classList.remove("show");
   
     try {
-      const res = await fetch("http://localhost:8080/gpt", {
+      const res = await fetch("http://abibotti.online/gpt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ subject, topic })
@@ -191,7 +191,7 @@ function setCurrentQuestion(questionText) {
       
   
     try {
-      const res = await fetch("http://localhost:8080/correction", {
+      const res = await fetch("http://abibotti.online/correction", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
