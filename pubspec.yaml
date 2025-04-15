@@ -1,5 +1,5 @@
-name: abibotti_backend
-description: Mon backend YO
+name: abibotti
+description: Backend YO-koe
 version: 1.0.0
 
 environment:
@@ -7,6 +7,3 @@ environment:
 
 dependencies:
   dart_frog: ^1.0.0
-
-
-de la contrainte SDK Dart 
