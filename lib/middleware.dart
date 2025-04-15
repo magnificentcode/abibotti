@@ -1,7 +1,6 @@
 import 'package:dart_frog/dart_frog.dart';
-
-import '../routes/gpt.dart' as gpt;
-import '../routes/correction.dart' as correction;
+import 'package:abibotti/routes/gpt.dart' as gpt;
+import 'package:abibotti/routes/correction.dart' as correction;
 
 Future<Handler> buildHandler() async {
   final pipeline = Pipeline();
@@ -12,5 +11,3 @@ Future<Handler> buildHandler() async {
 
   return pipeline.addHandler(router);
 }
-
-
