@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  final file = File('${Directory.current.path}/public/main.html');
+  final file = File('${Directory.current.path}/public/studyhub.html');
 
   if (!file.existsSync()) {
-    return Response(statusCode: 404, body: 'main.html not found 😢');
+    return Response(statusCode: 404, body: 'study.hub.html not found 😢');
   }
 
   return Response.file(
