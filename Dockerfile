@@ -5,6 +5,8 @@ COPY . .
 
 RUN dart pub get
 
+RUN mkdir -p /app/public && cp -r public/* /app/public/
+
 ENV PORT=8080
 EXPOSE 8080
 
