@@ -56,23 +56,3 @@ Future<Response> _serveStaticHtml(String filename) async {
   }
   return Response(statusCode: 404, body: '$filename not found');
 }
-
-
-// ⚙️ Redirige vers une route Dart existante
-Future<Response> _proxyToRoute(String fileName, RequestContext context) async {
-  // Simulation : on importe manuellement ici si nécessaire
-  if (fileName == 'gpt.dart') {
-    return await importGptRoute(context);
-  }
-  if (fileName == 'correction.dart') {
-    return await importCorrectionRoute(context);
-  }
-  return Response(statusCode: 404);
-}
-
-// 🧠 Import "manuel" simulé (pas dynamique à l’exécution)
-import 'routes/gpt.dart' as gpt;
-import 'routes/correction.dart' as correction;
-
-Future<Response> importGptRoute(RequestContext context) => gpt.onRequest(context);
-Future<Response> importCorrectionRoute(RequestContext context) => correction.onRequest(context);
