@@ -21,10 +21,9 @@ Future<Response> _router(RequestContext context) async {
     return await correction.onRequest(context);
   }
 
-  // 📦 Fichiers statiques (css, js, images, html)
+  // 📦 Fichiers statiques
   final filePath = 'public$path';
   final file = File(filePath);
-
   if (await file.exists() && !await FileSystemEntity.isDirectory(filePath)) {
     final ext = file.uri.pathSegments.last.split('.').last;
     final contentType = _getContentType(ext);
@@ -36,7 +35,7 @@ Future<Response> _router(RequestContext context) async {
     );
   }
 
-  // 🏠 Fallback : index
+  // 🏠 Page principale fallback
   final indexFile = File('public/main.html');
   if (await indexFile.exists()) {
     return Response(
@@ -50,19 +49,7 @@ Future<Response> _router(RequestContext context) async {
   return Response(statusCode: 404, body: '❌ Not Found');
 }
 
-// 📄 Middleware simple pour logs
-Middleware _logMiddleware() {
-  return (handler) {
-    return (context) async {
-      final req = context.request;
-      final res = await handler(context);
-      print('📥 ${req.method} ${req.uri} → ${res.statusCode}');
-      return res;
-    };
-  };
-}
-
-// 🧠 Type MIME en fonction de l’extension
+// 🧠 Type MIME
 String _getContentType(String ext) {
   switch (ext) {
     case 'html':
@@ -85,4 +72,16 @@ String _getContentType(String ext) {
     default:
       return 'application/octet-stream';
   }
+}
+
+// 👁️ Middleware pour logs
+Middleware _logMiddleware() {
+  return (handler) {
+    return (context) async {
+      final req = context.request;
+      final res = await handler(context);
+      print('📥 ${req.method} ${req.uri} → ${res.statusCode}');
+      return res;
+    };
+  };
 }
