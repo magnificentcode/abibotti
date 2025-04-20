@@ -14,7 +14,17 @@ Future<Handler> buildHandler() async {
     ..get('/studyhub', studyhub.onRequest);
 
   final pipeline = Pipeline()
-    .addMiddleware(logRequests()); // (optionnel : ajoute logs console)
+    .addMiddleware(_loggingMiddleware());
 
   return pipeline.addHandler(router);
+}
+Middleware _loggingMiddleware() {
+  return (handler) {
+    return (context) async {
+      final request = context.request;
+      final response = await handler(context);
+      print('📥 ${request.method} ${request.uri} => ${response.statusCode}');
+      return response;
+    };
+  };
 }
