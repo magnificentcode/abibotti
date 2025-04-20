@@ -1,87 +1,70 @@
 import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
-
 import 'routes/gpt.dart' as gpt;
 import 'routes/correction.dart' as correction;
 
+/// Middleware principal
+Future<Handler> middleware(Handler handler) async {
+  return handler;
+}
+
+/// Génère le `Handler` principal
 Future<Handler> buildHandler() async {
-  return Pipeline()
-      .addMiddleware(_logMiddleware())
-      .addHandler(_router);
-}
+  final router = Router()
+    ..post('/gpt', gpt.onRequest)
+    ..post('/correction', correction.onRequest);
 
-Future<Response> _router(RequestContext context) async {
-  final path = context.request.uri.path;
+  final staticHandler = await createStaticHandler(
+    'public',
+    defaultDocument: 'main.html',
+    serveFilesOutsidePath: true,
+  );
 
-  // 🎯 API
-  if (path == '/gpt' && context.request.method == HttpMethod.post) {
-    return await gpt.onRequest(context);
-  }
-  if (path == '/correction' && context.request.method == HttpMethod.post) {
-    return await correction.onRequest(context);
-  }
+  return (RequestContext context) async {
+    final request = context.request;
 
-  // 📦 Fichiers statiques
-  final filePath = 'public$path';
-  final file = File(filePath);
-  if (await file.exists() && !await FileSystemEntity.isDirectory(filePath)) {
-    final ext = file.uri.pathSegments.last.split('.').last;
-    final contentType = _getContentType(ext);
+    // 🔍 Priorité aux routes déclarées
+    final match = router.match(request);
+
+    if (match != null) {
+      return await match.handler(context);
+    }
+
+    // 🗂️ Si pas de route API, essayer de servir un fichier statique
+    final path = request.uri.path;
+    final file = File('public/$path');
+
+    if (await file.exists()) {
+      final contentType = _getContentType(path);
+      return Response.bytes(
+        await file.readAsBytes(),
+        headers: {
+          HttpHeaders.contentTypeHeader: contentType,
+        },
+      );
+    }
+
+    // 🧭 Fallback → page principale
+    final indexFile = File('public/main.html');
+    final indexContent = await indexFile.readAsString();
     return Response(
-      body: await file.readAsBytes(),
+      body: indexContent,
       headers: {
-        HttpHeaders.contentTypeHeader: contentType,
+        HttpHeaders.contentTypeHeader: 'text/html; charset=utf-8',
       },
     );
-  }
-
-  // 🏠 Page principale fallback
-  final indexFile = File('public/main.html');
-  if (await indexFile.exists()) {
-    return Response(
-      body: await indexFile.readAsString(),
-      headers: {
-        HttpHeaders.contentTypeHeader: 'text/html',
-      },
-    );
-  }
-
-  return Response(statusCode: 404, body: '❌ Not Found');
-}
-
-// 🧠 Type MIME
-String _getContentType(String ext) {
-  switch (ext) {
-    case 'html':
-      return 'text/html';
-    case 'css':
-      return 'text/css';
-    case 'js':
-      return 'application/javascript';
-    case 'png':
-      return 'image/png';
-    case 'jpg':
-    case 'jpeg':
-      return 'image/jpeg';
-    case 'svg':
-      return 'image/svg+xml';
-    case 'webp':
-      return 'image/webp';
-    case 'json':
-      return 'application/json';
-    default:
-      return 'application/octet-stream';
-  }
-}
-
-// 👁️ Middleware pour logs
-Middleware _logMiddleware() {
-  return (handler) {
-    return (context) async {
-      final req = context.request;
-      final res = await handler(context);
-      print('📥 ${req.method} ${req.uri} → ${res.statusCode}');
-      return res;
-    };
   };
+}
+
+/// 🔍 Déduction du Content-Type
+String _getContentType(String path) {
+  if (path.endsWith('.css')) return 'text/css';
+  if (path.endsWith('.js')) return 'application/javascript';
+  if (path.endsWith('.png')) return 'image/png';
+  if (path.endsWith('.jpg') || path.endsWith('.jpeg')) return 'image/jpeg';
+  if (path.endsWith('.webp')) return 'image/webp';
+  if (path.endsWith('.svg')) return 'image/svg+xml';
+  if (path.endsWith('.woff')) return 'font/woff';
+  if (path.endsWith('.woff2')) return 'font/woff2';
+  return 'application/octet-stream'; // fallback
 }
