@@ -9,40 +9,38 @@ Future<Handler> buildHandler() async {
     ..post('/correction', correction.onRequest);
 
   return (RequestContext context) async {
-    final request = context.request;
-    final path = request.uri.path;
+    final path = context.request.uri.path;
 
-    // ✅ Fichiers statiques
-    final file = File('public$path');
-    if (await file.exists()) {
-      final contentType = _getContentType(path);
-      return Response(
-        body: await file.readAsString(),
-        headers: {
-          HttpHeaders.contentTypeHeader: contentType,
-        },
-      );
-    }
+    // ✅ 1. Servir fichiers statiques (CSS, JS, IMG, HTML, etc.)
+    final staticResponse = await tryServeStatic(path);
+    if (staticResponse != null) return staticResponse;
 
-    // ✅ Routes API
-    final response = await router.handler(context);
-    if (response.statusCode != 404) return response;
+    // ✅ 2. Routes dynamiques backend
+    final routeResponse = await router.handler(context);
+    if (routeResponse.statusCode != 404) return routeResponse;
 
-    // ✅ Page d'accueil (fallback)
-    final indexFile = File('public/main.html');
-    if (await indexFile.exists()) {
-      return Response(
-        body: await indexFile.readAsString(),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'text/html; charset=utf-8',
-        },
-      );
-    }
-
-    return Response(statusCode: 404, body: '❌ Page non trouvée');
+    // ✅ 3. Fallback : page d'accueil
+    final fallback = await tryServeStatic('/main.html');
+    return fallback ?? Response(statusCode: 404, body: '❌ Page non trouvée');
   };
 }
 
+// 📂 Essaie de lire un fichier dans /public
+Future<Response?> tryServeStatic(String path) async {
+  final file = File('public$path');
+  if (!await file.exists()) return null;
+
+  final contentType = _getContentType(path);
+
+  return Response(
+    body: await file.readAsString(),
+    headers: {
+      HttpHeaders.contentTypeHeader: contentType,
+    },
+  );
+}
+
+// 🧠 Détection type MIME selon extension
 String _getContentType(String path) {
   if (path.endsWith('.html')) return 'text/html; charset=utf-8';
   if (path.endsWith('.css')) return 'text/css';
