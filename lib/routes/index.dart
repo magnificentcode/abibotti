@@ -1,16 +1,13 @@
-import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:shelf_static/shelf_static.dart';
+
+final staticHandler = createStaticHandler(
+  'public', 
+  defaultDocument: 'main.html', 
+  serveFilesOutsidePath: false,
+);
 
 Future<Response> onRequest(RequestContext context) async {
-  final file = File('public/main.html');
-  if (await file.exists()) {
-    final content = await file.readAsString();
-    return Response(
-      body: content,
-      headers: {
-        HttpHeaders.contentTypeHeader: 'text/html',
-      },
-    );
-  }
-  return Response(statusCode: 404, body: 'main.html not found');
+  final response = await staticHandler(context.request);
+  return response;
 }
