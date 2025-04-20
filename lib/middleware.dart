@@ -12,40 +12,41 @@ Future<Handler> buildHandler() async {
     final request = context.request;
     final path = request.uri.path;
 
-    // ✅ 1. Priorité aux routes API
-    final match = router.match(request);
-    if (match != null) return await match.handler(context);
+    // ✅ 1. Routes déclarées
+    final response = await router.handler(context);
+    if (response.statusCode != 404) return response;
 
-    // ✅ 2. Fichiers statiques (CSS, JS, IMG, etc.)
+    // ✅ 2. Fichier statique ?
     final filePath = 'public$path';
     final file = File(filePath);
     if (await file.exists()) {
       final contentType = _getContentType(path);
-      return Response.bytes(
-        await file.readAsBytes(),
-        statusCode: 200,
+      final bytes = await file.readAsBytes();
+      return Response(
+        body: Body.bytes(bytes),
         headers: {
           HttpHeaders.contentTypeHeader: contentType,
         },
       );
     }
 
-    // ✅ 3. Fallback : sert public/main.html
+    // ✅ 3. Page d’accueil par défaut
     final indexFile = File('public/main.html');
     if (await indexFile.exists()) {
+      final html = await indexFile.readAsString();
       return Response(
-        body: await indexFile.readAsString(),
+        body: html,
         headers: {
           HttpHeaders.contentTypeHeader: 'text/html; charset=utf-8',
         },
       );
     }
 
+    // ❌ 404 si rien trouvé
     return Response(statusCode: 404, body: '❌ Page non trouvée');
   };
 }
 
-// 🧠 Déduction du Content-Type par extension
 String _getContentType(String path) {
   if (path.endsWith('.html')) return 'text/html; charset=utf-8';
   if (path.endsWith('.css')) return 'text/css';
@@ -57,5 +58,5 @@ String _getContentType(String path) {
   if (path.endsWith('.svg')) return 'image/svg+xml';
   if (path.endsWith('.woff2')) return 'font/woff2';
   if (path.endsWith('.woff')) return 'font/woff';
-  return 'application/octet-stream'; // fallback
+  return 'application/octet-stream';
 }
