@@ -38,10 +38,11 @@ Future<Handler> buildHandler() async {
       final contentType = _getContentType(path);
       return Response.bytes(
         await file.readAsBytes(),
+        statusCode: 200,
         headers: {
           HttpHeaders.contentTypeHeader: contentType,
-        },
-      );
+                  },
+);
     }
 
     // 🧭 Fallback → page principale
