@@ -18,7 +18,7 @@ Future<Handler> buildHandler() async {
         if (staticResponse != null) return staticResponse;
 
         // 2. Routes dynamiques backend
-        final response = await router.handler(context);
+        final response = await router(context);
         if (response.statusCode != 404) return response;
 
         // 3. Pages HTML simples ("/", "/studyhub")
