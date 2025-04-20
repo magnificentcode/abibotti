@@ -1,13 +1,9 @@
 import 'package:dart_frog/dart_frog.dart';
-import 'package:abibotti/routes/gpt.dart' as gpt;
-import 'package:abibotti/routes/correction.dart' as correction;
 
-Future<Handler> buildHandler() async {
-  final pipeline = Pipeline();
+// ✅ Pas de Router manuel ici.
+// Dart Frog utilisera automatiquement les fichiers de lib/routes/*.dart
 
-  final router = Router()
-    ..post('/gpt', gpt.onRequest)
-    ..post('/correction', correction.onRequest);
-
-  return pipeline.addHandler(router);
+Handler middleware(Handler handler) {
+  // Tu peux ajouter ici des middlewares globaux si tu veux
+  return handler;
 }
