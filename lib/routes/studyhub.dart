@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  final file = File('public/main.html');
+  final file = File('public/studyhub.html');
   if (await file.exists()) {
     final content = await file.readAsString();
     return Response(
@@ -12,5 +12,5 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
   }
-  return Response(statusCode: 404, body: 'main.html not found');
+  return Response(statusCode: 404, body: 'studyhub.html not found');
 }
