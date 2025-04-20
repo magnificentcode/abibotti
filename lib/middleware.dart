@@ -1,58 +1,34 @@
 import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:shelf_static/shelf_static.dart';
 
-// ✅ IMPORTS en haut du fichier
 import 'routes/gpt.dart' as gpt;
 import 'routes/correction.dart' as correction;
 
+// 🔧 Sert tous les fichiers de public/ statiquement
+final staticHandler = createStaticHandler(
+  'public',
+  defaultDocument: 'main.html',
+  serveFilesOutsidePath: false,
+);
+
 Future<Handler> buildHandler() async {
   return Pipeline()
-      .addMiddleware(_logMiddleware())
-      .addHandler(_autoRouter());
-}
+      .addMiddleware(logRequests())
+      .addHandler((context) async {
+        final path = context.request.uri.path;
 
-Middleware _logMiddleware() {
-  return (handler) {
-    return (context) async {
-      final req = context.request;
-      final res = await handler(context);
-      print('📥 ${req.method} ${req.uri} -> ${res.statusCode}');
-      return res;
-    };
-  };
-}
+        // Si un fichier statique existe → on le sert
+        final staticFile = File('public/$path');
+        if (await staticFile.exists()) {
+          return staticHandler(context.request);
+        }
 
-Handler _autoRouter() {
-  return (context) async {
-    final req = context.request;
-    final path = req.uri.path;
+        // Sinon, les routes backend
+        if (path == '/gpt') return await gpt.onRequest(context);
+        if (path == '/correction') return await correction.onRequest(context);
 
-    if (req.method == HttpMethod.get) {
-      if (path == '/') return await _serveStaticHtml('main.html');
-      if (path == '/studyhub') return await _serveStaticHtml('studyhub.html');
-      return Response(statusCode: 404, body: '🚫 Route not found');
-    }
-
-    if (req.method == HttpMethod.post && path == '/gpt') {
-      return await gpt.onRequest(context);
-    }
-
-    if (req.method == HttpMethod.post && path == '/correction') {
-      return await correction.onRequest(context);
-    }
-
-    return Response(statusCode: 404, body: '❌ No matching route.');
-  };
-}
-
-Future<Response> _serveStaticHtml(String filename) async {
-  final file = File('public/$filename');
-  if (await file.exists()) {
-    final content = await file.readAsString();
-    return Response(
-      body: content,
-      headers: {'Content-Type': 'text/html'},
-    );
-  }
-  return Response(statusCode: 404, body: '$filename not found');
+        // Sinon, retourne la page d'accueil
+        return await staticHandler(context.request);
+      });
 }
