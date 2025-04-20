@@ -1,56 +1,88 @@
 import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
-import 'package:shelf_static/shelf_static.dart' as shelf_static;
-import 'package:shelf/shelf.dart' as shelf;
 
 import 'routes/gpt.dart' as gpt;
 import 'routes/correction.dart' as correction;
 
-final shelfHandler = shelf_static.createStaticHandler(
-  'public',
-  defaultDocument: 'main.html',
-  serveFilesOutsidePath: false,
-);
-
 Future<Handler> buildHandler() async {
   return Pipeline()
       .addMiddleware(_logMiddleware())
-      .addHandler((context) async {
-        final request = context.request;
-        final path = request.uri.path;
-
-        // ⚙️ Check si le fichier statique existe
-        if (await File('public/$path').exists()) {
-          final shelfResponse = await shelfHandler(request.toShelfRequest());
-          return Response(
-            statusCode: shelfResponse.statusCode,
-            body: await shelfResponse.readAsString(),
-            headers: Map.from(shelfResponse.headers),
-          );
-        }
-
-        // 🎯 Routes API personnalisées
-        if (path == '/gpt') return await gpt.onRequest(context);
-        if (path == '/correction') return await correction.onRequest(context);
-
-        // 🏠 Sinon, retourne la page d’accueil
-        final fallback = await shelfHandler(Request.get('/'));
-        return Response(
-          statusCode: fallback.statusCode,
-          body: await fallback.readAsString(),
-          headers: Map.from(fallback.headers),
-        );
-      });
+      .addHandler(_router);
 }
 
-// 👀 Middleware simple pour logguer les requêtes
+Future<Response> _router(RequestContext context) async {
+  final path = context.request.uri.path;
+
+  // 🎯 API
+  if (path == '/gpt' && context.request.method == HttpMethod.post) {
+    return await gpt.onRequest(context);
+  }
+  if (path == '/correction' && context.request.method == HttpMethod.post) {
+    return await correction.onRequest(context);
+  }
+
+  // 📦 Fichiers statiques (css, js, images, html)
+  final filePath = 'public$path';
+  final file = File(filePath);
+
+  if (await file.exists() && !await FileSystemEntity.isDirectory(filePath)) {
+    final ext = file.uri.pathSegments.last.split('.').last;
+    final contentType = _getContentType(ext);
+    return Response(
+      body: await file.readAsBytes(),
+      headers: {
+        HttpHeaders.contentTypeHeader: contentType,
+      },
+    );
+  }
+
+  // 🏠 Fallback : index
+  final indexFile = File('public/main.html');
+  if (await indexFile.exists()) {
+    return Response(
+      body: await indexFile.readAsString(),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'text/html',
+      },
+    );
+  }
+
+  return Response(statusCode: 404, body: '❌ Not Found');
+}
+
+// 📄 Middleware simple pour logs
 Middleware _logMiddleware() {
   return (handler) {
     return (context) async {
       final req = context.request;
       final res = await handler(context);
-      print('📥 ${req.method} ${req.uri} -> ${res.statusCode}');
+      print('📥 ${req.method} ${req.uri} → ${res.statusCode}');
       return res;
     };
   };
+}
+
+// 🧠 Type MIME en fonction de l’extension
+String _getContentType(String ext) {
+  switch (ext) {
+    case 'html':
+      return 'text/html';
+    case 'css':
+      return 'text/css';
+    case 'js':
+      return 'application/javascript';
+    case 'png':
+      return 'image/png';
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'svg':
+      return 'image/svg+xml';
+    case 'webp':
+      return 'image/webp';
+    case 'json':
+      return 'application/json';
+    default:
+      return 'application/octet-stream';
+  }
 }
