@@ -1,119 +1,147 @@
 :root {
   --primary: #243010;
   --accent: #E8B923;
-  --light: #ececec;
-  --background: #ececec;
-  --highlight: #FFF9E6;
-  --font-main: 'Inter', sans-serif;
+  --light: #f5f5f5;
+  --dark: #1A1A1A;
+  --btn: #2f4f2f;
+  --font-main: 'Inter', 'Segoe UI', sans-serif;
 }
 
-/* Body + base override */
 body {
+  margin: 0;
+  padding: 0;
   font-family: var(--font-main);
   background-color: var(--light);
   color: var(--primary);
 }
 
-/* Header */
-header.site-header {
-  background-color: var(--background);
-  padding: 1rem;
+/* === HEADER === */
+.site-header {
+  background-color: var(--primary);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header img {
+  height: 32px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* === STUDYHUB === */
+.studyhub {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.head {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary);
+}
+
+.selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   margin-bottom: 2rem;
 }
 
-.navbar img {
-  height: 40px;
-  margin-right: 1rem;
+.selectors label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 
-/* Hero */
-.hero {
-  background: url('../assets/img/Heros2.webp') center/cover no-repeat;
-  height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.selectors select {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
 }
 
-.overlay-1 {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+/* === BUTTONS === */
+.primary-btn,
+.action-button {
+  background-color: var(--primary);
   color: white;
-  text-align: center;
-  padding: 2rem;
-  border-radius: 1rem;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-.overlay-1 p {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px black;
+.primary-btn:hover,
+.action-button:hover {
+  background-color: var(--accent);
+  color: var(--primary);
 }
 
-.line1 {
-  font-size: 1.2rem;
-  letter-spacing: 1px;
-}
-.line2 {
-  font-size: 1.8rem;
-  text-transform: uppercase;
+/* === QUESTION BOX === */
+.question-box {
+  background-color: #fafafa;
+  border-left: 4px solid var(--primary);
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  margin-top: 1.5rem;
 }
 
-/* Question box + loader */
-#question-box {
-  background: var(--highlight);
-  padding: 1rem;
+/* === FEEDBACK AREA === */
+.ai-feedback {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #fff;
   border-left: 4px solid var(--accent);
-  margin-top: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .loader {
-  border: 4px solid #eee;
-  border-top: 4px solid var(--primary);
+  margin: 2rem auto;
+  border: 5px solid #ccc;
+  border-top: 5px solid var(--primary);
   border-radius: 50%;
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
-  margin: 2rem auto;
 }
 
 @keyframes spin {
   0% { transform: rotate(0); }
   100% { transform: rotate(360deg); }
-}
-
-/* Editor */
-.rich-editor,
-#answer-editor {
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 1rem;
-  min-height: 150px;
-  font-family: 'Georgia', serif;
-  line-height: 1.6;
-  overflow-wrap: break-word;
-}
-
-.equation {
-  background-color: #f0f0f0;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin: 0 4px;
-  display: inline-block;
-}
-
-/* Equation Popup */
-.equation-popup {
-  position: fixed;
-  top: 25%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  border: 2px solid var(--primary);
-  padding: 1rem;
-  z-index: 1000;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
