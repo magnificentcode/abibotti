@@ -1,48 +1,37 @@
-import 'dart:io'; // pour Platform.environment
+import 'dart:io';
+import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:convert' show utf8;
-import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  // ✅ GET : pour vérifier que la route fonctionne
-  if (context.request.method == HttpMethod.get) {
-    return Response.json(
-      body: {
-        'message': '✅ La route /gpt est active. Utilise POST pour envoyer des données.'
-      },
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*',
-      },
-    );
+  final method = context.request.method;
+
+  // GET pour test rapide
+  if (method == HttpMethod.get) {
+    return _jsonOk({'message': '✅ /gpt ready'});
   }
 
-  // 🔧 OPTIONS : CORS preflight
-  if (context.request.method == HttpMethod.options) {
-    return Response(
-      statusCode: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    );
+  // OPTIONS (CORS preflight)
+  if (method == HttpMethod.options) {
+    return _cors(204);
   }
 
-  // 🔁 POST : Générer une question via OpenAI
+  // POST
   try {
-    final body = await context.request.body();
-    final data = jsonDecode(body);
-    final subject = data['subject'];
-    final topic = data['topic'];
+    final raw = await context.request.body();
+    final json = jsonDecode(raw);
+    final subject = json['subject']?.toString();
+    final topic = json['topic']?.toString();
+
+    if (subject == null || topic == null) {
+      return _jsonError("Champs 'subject' et 'topic' requis.");
+    }
 
     final prompt = '''
-Tu es un expert des examens du bac finlandais. Génère une question de YO-Koe (baccalauréat) en "$subject" inspirée de l'examen de l'année "$topic".NB: tu ne fais rien que t'inspiré des examens ultrieurs. ecrit juste ce que je t'ai demandé d'ecrire, rien d'autre. 
-Corrige tous les caractères mal encodés pour qu'ils soient lisibles par un humain (par exemple, "Ã¤" devient "ä").Si le cours est une langue, ne pause pas de question d'ecoute.
+Tu es un expert YO. Génère une question en "$subject", inspirée de l’année "$topic".
+Corrige tous les caractères mal encodés. Réponds uniquement en JSON comme ceci :
 
-Réponds uniquement en JSON :
 {
   "question": "...",
   "level": "...",
@@ -50,10 +39,10 @@ Réponds uniquement en JSON :
   "solution": "...",
   "steps": "..."
 }
-Tu dois absolument répondre en **finnois**.
+Langue : finnois.
 ''';
 
-    final response = await http.post(
+    final res = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
       headers: {
         'Content-Type': 'application/json',
@@ -62,32 +51,49 @@ Tu dois absolument répondre en **finnois**.
       body: jsonEncode({
         'model': 'gpt-4',
         'messages': [
-          {'role': 'system', 'content': "Tu es un générateur d'examens YO."},
-          {'role': 'user', 'content': prompt},
+          {'role': 'system', 'content': 'Tu es un générateur YO.'},
+          {'role': 'user', 'content': prompt}
         ],
         'temperature': 0.8,
       }),
     );
 
-    final utf8Content = utf8.decode(response.bodyBytes);
-    final parsed = jsonDecode(jsonDecode(utf8Content)['choices'][0]['message']['content']);
+    if (res.statusCode != 200) {
+      return _jsonError("Erreur OpenAI (${res.statusCode})", details: res.body);
+    }
 
-    return Response.json(
-      body: parsed,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*',
-      },
-    );
+    final contentUtf8 = utf8.decode(res.bodyBytes);
+    final rawOpenAI = jsonDecode(contentUtf8);
+    final text = rawOpenAI['choices'][0]['message']['content'];
+    final parsed = jsonDecode(text);
+
+    return _jsonOk(parsed);
   } catch (e) {
-    return Response.json(
-      statusCode: 500,
-      body: {
-        'error': "❌ Erreur de parsing JSON ou appel API.",
-        'details': e.toString(),
-      },
-      headers: {'Access-Control-Allow-Origin': '*'},
-    );
+    return _jsonError("Erreur JSON ou API", details: e.toString());
   }
 }
+
+// ✅ Helpers
+
+Response _jsonOk(Map<String, dynamic> body) => Response.json(
+  body: body,
+  headers: {'Access-Control-Allow-Origin': '*'},
+);
+
+Response _jsonError(String message, {String? details}) => Response.json(
+  statusCode: 500,
+  body: {
+    'error': '❌ $message',
+    if (details != null) 'details': details,
+  },
+  headers: {'Access-Control-Allow-Origin': '*'},
+);
+
+Response _cors(int status) => Response(
+  statusCode: status,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  },
+);
