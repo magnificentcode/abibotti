@@ -1,5 +1,5 @@
-// 🌐 Adresse du backend (Railway pour l'instant)
-const BACKEND_BASE_URL = "https://abibotti-production.up.railway.app";
+// 🌐 Base dynamique (pour Railway ou localhost)
+const BASE_URL = window.location.origin;
 
 // Stocke la question actuelle dans l'input caché
 function setCurrentQuestion(questionText) {
@@ -25,28 +25,36 @@ async function fetchQuestionFromBackend() {
   contentArea.classList.remove("show");
 
   try {
-    const res = await fetch(`${BACKEND_BASE_URL}/gpt`, {
+    const res = await fetch(`${BASE_URL}/gpt`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ subject, topic })
     });
 
-    const data = await res.json();
-    loader.style.display = "none";
+    const text = await res.text();
+    try {
+      const data = JSON.parse(text);
+      if (res.status === 401) {
+        alert("🚫 Accès non autorisé. Clé API invalide ou manquante.");
+        return;
+      }
 
-    if (data.error) {
-      box.innerHTML = `<p>⚠️ ${data.error}</p>`;
-    } else {
-      box.innerHTML = `
-        <h3>YO (${data.difficulty || "??"})</h3>
-        <p><strong>Kysymys :</strong> ${data.question}</p>
-      `;
-      box.style.display = "block";
-      contentArea.classList.add("show");
-      setCurrentQuestion(data.question);
+      if (data.error) {
+        box.innerHTML = `<p>⚠️ ${data.error}</p>`;
+      } else {
+        box.innerHTML = `
+          <h3>YO (${data.difficulty || "??"})</h3>
+          <p><strong>Kysymys :</strong> ${data.question}</p>
+        `;
+        box.style.display = "block";
+        contentArea.classList.add("show");
+        setCurrentQuestion(data.question);
+      }
+    } catch (jsonErr) {
+      console.error("Erreur JSON parsing:", jsonErr);
+      alert("❌ La réponse reçue n’est pas un JSON valide.");
     }
   } catch (err) {
-    loader.style.display = "none";
     alert("❌ Une erreur est survenue lors de la récupération de la question.");
     console.error(err);
   }
@@ -54,115 +62,9 @@ async function fetchQuestionFromBackend() {
 
 document.getElementById("generate-backend-question").addEventListener("click", fetchQuestionFromBackend);
 
-// 🎯 Éditeur équations
-const equationPopup = document.getElementById("equation-popup");
-const equationInput = document.getElementById("equation-input");
-const equationPreview = document.getElementById("equation-preview");
-const insertBtn = document.getElementById("insert-equation");
-const answerEditor = document.getElementById("answer-editor");
-const equationList = document.getElementById("equation-list");
-
-document.addEventListener("keydown", (e) => {
-  if (e.ctrlKey && e.key.toLowerCase() === 'e') {
-    e.preventDefault();
-    equationPopup.style.display = 'block';
-    equationInput.focus();
-  }
-});
-
-equationInput.addEventListener("input", () => {
-  equationPreview.innerHTML = `\$begin:math:text$${equationInput.value}\\$end:math:text$`;
-  MathJax.typesetPromise([equationPreview]);
-});
-
-function insertEquation(tex) {
-  if (!tex) return;
-
-  const span = document.createElement("span");
-  span.className = "equation";
-  span.innerText = `\$begin:math:text$${tex}\\$end:math:text$`;
-
-  const sel = window.getSelection();
-  if (sel.rangeCount > 0) {
-    const range = sel.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(span);
-    range.collapse(false);
-    sel.removeAllRanges();
-    sel.addRange(range);
-    MathJax.typesetPromise([span]);
-  }
-
-  const listItem = document.createElement("span");
-  listItem.className = "equation";
-  listItem.innerText = `\$begin:math:text$${tex}\\$end:math:text$`;
-  listItem.title = "Cliquez pour supprimer";
-  listItem.addEventListener("click", () => listItem.remove());
-  equationList.appendChild(listItem);
-  MathJax.typesetPromise([listItem]);
-
-  equationPopup.style.display = 'none';
-  equationInput.value = '';
-  equationPreview.innerHTML = '';
-}
-
-insertBtn.addEventListener("click", () => {
-  const tex = equationInput.value.trim();
-  insertEquation(tex);
-
-  const block = document.createElement("div");
-  block.className = "equation-block";
-  block.setAttribute("data-latex", tex);
-  block.innerText = `\$begin:math:text$${tex}\\$end:math:text$`;
-  answerEditor.appendChild(block);
-  MathJax.typesetPromise([block]);
-});
-
-window.addEventListener('click', (e) => {
-  if (e.target === equationPopup) {
-    equationPopup.style.display = 'none';
-  }
-});
-
-answerEditor.addEventListener("click", (e) => {
-  const target = e.target;
-  if (target.classList.contains("equation-block")) {
-    const latex = target.getAttribute("data-latex");
-    equationInput.value = latex;
-    equationPreview.innerHTML = `\$begin:math:text$${latex}\\$end:math:text$`;
-    MathJax.typesetPromise([equationPreview]);
-    equationPopup.style.display = 'block';
-
-    insertBtn.onclick = () => {
-      const newLatex = equationInput.value.trim();
-      if (!newLatex) return;
-      target.innerText = `\$begin:math:text$${newLatex}\\$end:math:text$`;
-      target.setAttribute("data-latex", newLatex);
-      MathJax.typesetPromise([target]);
-      equationPopup.style.display = 'none';
-      equationInput.value = '';
-      equationPreview.innerHTML = '';
-    };
-  }
-});
-
-// 💾 Sauvegarde automatique
-setInterval(() => {
-  const content = answerEditor.innerHTML;
-  localStorage.setItem("abibotti_answer", content);
-  MathJax.typesetPromise();
-}, 5000);
-
-window.addEventListener("DOMContentLoaded", () => {
-  const saved = localStorage.getItem("abibotti_answer");
-  if (saved) {
-    answerEditor.innerHTML = saved;
-  }
-});
-
 // 📤 Envoi pour correction avec la question
 async function envoyerReponsePourCorrection() {
-  const contenuReponse = answerEditor.innerHTML;
+  const contenuReponse = document.getElementById("answer-editor").innerHTML;
   const question = document.getElementById("current-question").value;
   const feedback = document.getElementById("feedback-area");
 
@@ -178,27 +80,11 @@ async function envoyerReponsePourCorrection() {
 
   feedback.innerHTML = "<p>⏳ Analyse en cours...</p>";
 
-  function getCleanedAnswerHTML() {
-    const editor = document.getElementById("answer-editor");
-    const clone = editor.cloneNode(true);
-
-    clone.querySelectorAll('.equation, .equation-block').forEach(span => {
-      const latex = span.innerText || span.textContent || '';
-      const textNode = document.createTextNode(latex);
-      span.replaceWith(textNode);
-    });
-
-    return clone.textContent.trim();
-  }
-
   try {
-    const res = await fetch(`${BACKEND_BASE_URL}/correction`, {
+    const res = await fetch(`${BASE_URL}/correction`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        question: question,
-        reponse: contenuReponse
-      })
+      body: JSON.stringify({ question, reponse: contenuReponse })
     });
 
     const data = await res.json();

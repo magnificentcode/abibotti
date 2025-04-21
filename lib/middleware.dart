@@ -30,7 +30,6 @@ Future<Handler> buildHandler() async {
       });
 }
 
-// 🧾 Logger simple
 Middleware _logMiddleware() {
   return (handler) {
     return (context) async {
@@ -42,7 +41,6 @@ Middleware _logMiddleware() {
   };
 }
 
-// 🔹 Sert fichiers statiques comme .css, .js, .png
 Future<Response?> tryServeStatic(String path) async {
   final file = File('public$path');
   if (!await file.exists()) return null;
@@ -54,7 +52,6 @@ Future<Response?> tryServeStatic(String path) async {
   );
 }
 
-// 🧠 Type MIME
 String _getContentType(String path) {
   if (path.endsWith('.html')) return 'text/html; charset=utf-8';
   if (path.endsWith('.css')) return 'text/css';
@@ -69,7 +66,6 @@ String _getContentType(String path) {
   return 'application/octet-stream';
 }
 
-// 🔸 Pages HTML simples
 Future<Response> _serveStaticHtml(String filename) async {
   final file = File('public/$filename');
   if (await file.exists()) {
