@@ -1,68 +1,63 @@
-// 🌐 Base dynamique (pour Railway ou localhost)
-const BASE_URL = window.location.origin;
+// ✅ main.js corrigé pour Railway (plus de localhost)
 
-// Stocke la question actuelle dans l'input caché
 function setCurrentQuestion(questionText) {
   document.getElementById("current-question").value = questionText;
 }
 
-// 🔄 Récupère une question depuis le backend
 async function fetchQuestionFromBackend() {
   const subject = document.getElementById("matiere").value;
   const topic = document.getElementById("subject").value;
+  const loader = document.getElementById("loader");
+  const box = document.getElementById("question-box");
+  const contentArea = document.getElementById("content-area");
 
   if (!subject || !topic) {
     alert("Valitse ensin oppiaine ja vuosi.");
     return;
   }
 
-  const loader = document.getElementById("loader");
-  const box = document.getElementById("question-box");
-  const contentArea = document.getElementById("content-area");
-
   loader.style.display = "block";
   box.style.display = "none";
   contentArea.classList.remove("show");
 
   try {
-    const res = await fetch(`${BASE_URL}/gpt`, {
+    const res = await fetch("/gpt", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ subject, topic })
+      body: JSON.stringify({ subject, topic }),
     });
 
     const text = await res.text();
-    try {
-      const data = JSON.parse(text);
-      if (res.status === 401) {
-        alert("🚫 Accès non autorisé. Clé API invalide ou manquante.");
-        return;
-      }
+    const data = JSON.parse(text);
 
-      if (data.error) {
-        box.innerHTML = `<p>⚠️ ${data.error}</p>`;
-      } else {
-        box.innerHTML = `
-          <h3>YO (${data.difficulty || "??"})</h3>
-          <p><strong>Kysymys :</strong> ${data.question}</p>
-        `;
-        box.style.display = "block";
-        contentArea.classList.add("show");
-        setCurrentQuestion(data.question);
-      }
-    } catch (jsonErr) {
-      console.error("Erreur JSON parsing:", jsonErr);
-      alert("❌ La réponse reçue n’est pas un JSON valide.");
+    if (res.status === 401) {
+      alert("🚫 Accès non autorisé. Clé API invalide ou manquante.");
+      return;
+    }
+
+    if (data.error) {
+      box.innerHTML = `<p>⚠️ ${data.error}</p>`;
+    } else {
+      box.innerHTML = `
+        <h3>YO (${data.difficulty || "??"})</h3>
+        <p><strong>Kysymys :</strong> ${data.question}</p>
+      `;
+      box.style.display = "block";
+      contentArea.classList.add("show");
+      setCurrentQuestion(data.question);
     }
   } catch (err) {
-    alert("❌ Une erreur est survenue lors de la récupération de la question.");
+    alert("❌ Erreur lors de la requête.");
     console.error(err);
+  } finally {
+    loader.style.display = "none";
   }
 }
 
-document.getElementById("generate-backend-question").addEventListener("click", fetchQuestionFromBackend);
+document.getElementById("generate-backend-question")
+  .addEventListener("click", fetchQuestionFromBackend);
 
-// 📤 Envoi pour correction avec la question
+// ✅ Submit answer
 async function envoyerReponsePourCorrection() {
   const contenuReponse = document.getElementById("answer-editor").innerHTML;
   const question = document.getElementById("current-question").value;
@@ -72,7 +67,6 @@ async function envoyerReponsePourCorrection() {
     feedback.innerHTML = "<p>⚠️ Écris une réponse avant de l’envoyer.</p>";
     return;
   }
-
   if (!question.trim()) {
     feedback.innerHTML = "<p>❗ Générez d'abord une question.</p>";
     return;
@@ -81,10 +75,10 @@ async function envoyerReponsePourCorrection() {
   feedback.innerHTML = "<p>⏳ Analyse en cours...</p>";
 
   try {
-    const res = await fetch(`${BASE_URL}/correction`, {
+    const res = await fetch("/correction", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, reponse: contenuReponse })
+      body: JSON.stringify({ question, reponse: contenuReponse }),
     });
 
     const data = await res.json();
@@ -106,4 +100,5 @@ async function envoyerReponsePourCorrection() {
   }
 }
 
-document.getElementById("submit-answer").addEventListener("click", envoyerReponsePourCorrection);
+document.getElementById("submit-answer")
+  .addEventListener("click", envoyerReponsePourCorrection);
