@@ -64,7 +64,7 @@ async function envoyerReponsePourCorrection() {
   const feedback = document.getElementById("feedback-area");
 
   if (!contenuReponse.trim()) {
-    feedback.innerHTML = "<p>⚠️ Écris une réponse avant de l’envoyer.</p>";
+    feedback.innerHTML = "<p>⚠️ Vastaa ensin.</p>";
     return;
   }
   if (!question.trim()) {
