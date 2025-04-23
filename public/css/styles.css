@@ -30,13 +30,22 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+  margin-top: 100px;
+  margin-bottom: 10px;
   
 }
 
-.site-header{
-  background-color: var(--background);
-  padding: 1.5rem 1rem;
+.main-aloita {
+margin-top: 0.3rem;
 }
+
+.site-header {
+  background-color: var(--background);
+  padding: 1.1rem 0,1rem;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
 
 
 .site-header {
@@ -91,7 +100,6 @@ body {
   color:aliceblue; /* dark gray */
   font-family: 'Inter', sans-serif;
   text-shadow: 0 1px 5px rgba(0,0,0,0.25);
-  background: linear-gradient(to top, rgba(0,0,0,0.2), rgba(0,0,0,0));
 
 
 }
@@ -121,6 +129,20 @@ body {
   letter-spacing: 3px;
  
 }
+
+.about-abibotti {
+  max-width: 800px;
+  margin: 4rem auto;
+  text-align: center;
+  color:var(--background);
+  margin-top: 4px;
+}
+
+.mitä-abibotti-osaa {
+  text-align: left;
+  display: inline-block;
+}
+
 
 .get-started {
   text-align: center;
