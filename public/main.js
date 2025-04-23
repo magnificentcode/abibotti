@@ -72,7 +72,7 @@ async function envoyerReponsePourCorrection() {
     return;
   }
 
-  feedback.innerHTML = "<p>⏳ Analyse en cours...</p>";
+  feedback.innerHTML = "<p>⏳ Clara lukee vastauksesi ja laatii palautetta...</p>";
 
   try {
     const res = await fetch("/correction", {

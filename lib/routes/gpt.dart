@@ -30,7 +30,7 @@ Future<Response> onRequest(RequestContext context) async {
 
     final prompt = '''
 Tu es un expert YO. Génère une question en "$subject", inspirée de l’année "$topic".
-Corrige tous les caractères mal encodés et affiche les expressions mathematiques de maniere lisible. Ne genere pas des questions du types "Mikä merkittävä kansainvälinen tapahtuma tapahtui vuonna ...., ja miten se vaikutti maailmanlaajuisesti?". Réponds uniquement en JSON comme ceci :
+Corrige tous les caractères mal encodés et affiche les expressions mathematiques de maniere lisible. Inspire toi des reels examens de matriculation finlandais. Réponds uniquement en JSON comme ceci :
 
 {
   "question": "...",

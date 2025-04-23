@@ -79,7 +79,7 @@ Vastaa vain suomeksi.
       headers: {'Access-Control-Allow-Origin': '*'},
     );
   } catch (e) {
-    return _jsonError("Erreur durant la correction.", details: e.toString());
+    return _jsonError("Virhe korjauksen aikana.", details: e.toString());
   }
 }
 
