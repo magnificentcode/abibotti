@@ -39,6 +39,7 @@ Génère du contenu en "$subject", inspiré du style officiel des examens de l'a
 - Propose 2 à 3 titres d’essai possibles au choix.
 - Respecte la longueur et le style typique des examens S2 (description concise, 2 à 4 phrases maximum).
 Corrige tous les caractères mal encodés et affiche les expressions mathématiques de manière lisible en utilisant LaTeX si besoin.
+- n'oublie pas de mettre le liens reels vers le text ou l'article ou la video. utilise yle pour les articles et tout les autres textes que l'utilisatuer aura besoin de lire.
 Inspire-toi du style réel des examens de matriculation finlandais pour S2 (ylioppilaskoe), en particulier pour :
 
 - Pitkä matematiikka (mathématiques longues)
