@@ -115,7 +115,7 @@ Respecte le style typique :
   "question": "Contenu de la question ou du sujet ici",
   "level": "Niveau approximatif (lyhyt oppimäärä, pitkä oppimäärä, helppo, keskitaso, vaikea)",
   "difficulty": "Facile / Moyen / Difficile",
-  "solution": "Correction complète, modèle de réponse ou éléments de rédaction attendus",
+  "solution": "Correction complète, modèle de réponse ou éléments de rédaction attendus. en cas de faute d'orthographe, explique pourquoi c'est une faute en bref et comment bien läecire ",
   "steps": "Explication pas à pas ou structure de la réponse"
 }
 

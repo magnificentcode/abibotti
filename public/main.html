@@ -10,51 +10,63 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
   <link rel="stylesheet" href="css/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- ✨ Animate on Scroll (AOS) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
 
-    <!-- ✅ Navigation principale -->
-    <header class="site-header">
-      <nav class="navbar">
-        <a href="/" class="logo">
-          <img src="/public/assets/img/abibottiFinaal.svg" alt="Abibotti Logo" />
-        </a>
-        <ul class="nav-links">
-          <li><a href="/studyhub.html">Yo-Koe</a></li>
-          <li><a href="/contact.html">Ota yhteyttä</a></li>
-        </ul>
-      </nav>
-    </header>
-  
-    <!-- ✅ Section d'accueil nettoyée -->
-    <section class="hero">
-        <div class="overlay-1">
-          <p class="line2">Tervetuloa Abibotille!</p>
-        </div>
-    </section>
-
-    <section class="about-abibotti">
-      <h2>🎓 Mitä on Abibotti?</h2>
-      <p><strong>Abibotti</strong> on tekoälyä käyttävä oppimisapuri YO-kokeisiin valmistautumiseen. Olitpa lukiossa tai valmistautumassa YO-kokeeseen itsenäisesti, Abibotti auttaa sinua harjoittelemaan tehokkaasti ja itsenäisesti.</p>
-      <h2>🧠 Mitä Abibotti osaa?</h2>
-      <ul class="mitä-abibotti-osaa">
-        <p>✅ Luo realistisia kokeita oikeista aineista ja aiemmista YO-teemoista.</p>
-        <p>✅ Arvioi vastauksesi: antaa <strong>arvosanan</strong>, <strong>korjatun version</strong> ja <strong>personoidun palautteen</strong>.</p>
+  <!-- ✅ Navigation -->
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="/" class="logo">
+        <img src="/public/assets/img/abibottiFinaal.svg" alt="Abibotti Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/studyhub.html">Yo-Koe</a></li>
+        <li><a href="/contact.html">Ota yhteyttä</a></li>
       </ul>
+    </nav>
+  </header>
+
+  <!-- ✅ Hero Section -->
+  <section class="hero">
+    <div class="overlay-1">
+      <p class="line2">Tervetuloa Abibotille!</p>
+      <a href="#about" class="primary-btn-second">Découvrir Abibotti</a>
+    </div>
+  </section>
+
+  <!-- ✅ About Section -->
+  <section id="about" class="about-abibotti" data-aos="fade-up">
+    <h2>🎓 Mitä on Abibotti?</h2>
+    <p><strong>Abibotti</strong> on tekoälyä käyttävä oppimisapuri YO-kokeisiin valmistautumiseen. 
+      Olitpa lukiossa tai valmistautumassa YO-kokeeseen itsenäisesti, Abibotti auttaa sinua harjoittelemaan tehokkaasti ja itsenäisesti.
+    </p>
+
+    <h2>🧠 Mitä Abibotti osaa?</h2>
+    <ul class="mitä-abibotti-osaa">
+      <li>✅ Luo realistisia kokeita oikeista aineista ja aiemmista YO-teemoista.</li>
+      <li>✅ Arvioi vastauksesi: antaa <strong>arvosanan</strong>, <strong>korjatun version</strong> ja <strong>personoidun palautteen</strong>.</li>
+    </ul>
+  </section>
+
+  <!-- ✅ Get Started Section -->
+  <main>
+    <section class="get-started" data-aos="fade-up">
+      <a href="/studyhub.html" class="btn-start">Aloita</a>
     </section>
 
-    <main>
-      <section class="get-started">
-        <a href="/studyhub.html" class="btn-start">Aloita</a>
-      </section>
+    <section class="placeholder" data-aos="fade-up">
+      <p>🔧 Rakenteilla on jotain siistiä... nähdään pian!</p>
+    </section>
+  </main>
 
-      <section class="placeholder">
-        <p>🔧 Rakenteilla on jotain siistiä... nähdään pian!</p>
-      </div>
-      </section>
+  <!-- ✨ Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 
-    </main>
-
-  </body>
-  </html>
-
+</body>
+</html>
