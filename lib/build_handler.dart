@@ -25,13 +25,18 @@ Future<Handler> buildHandler() async {
         if (path == '/') return await _serveStaticHtml('main.html');
 
         if (path == '/studyhub') {
-          final authPipeline = Pipeline().addMiddleware(checkAuth()).addHandler((ctx) async {
-            return await _serveStaticHtml('studyhub.html');
-          });
+          final authPipeline = Pipeline()
+            .addMiddleware(checkAuth())
+            .addHandler((ctx) async {
+              return await _serveStaticHtml('studyhub.html');
+            });
           return await authPipeline(context);
         }
 
-        return Response(statusCode: 404, body: '❌ Page not found');
+        return Response(
+          statusCode: 404,
+          body: '❌ Page not found',
+        );
       });
 }
 
@@ -54,8 +59,8 @@ Future<Response?> tryServeStatic(String path) async {
   final isBinary = _isBinaryFile(path);
 
   if (isBinary) {
-    return Response.body(
-      await file.readAsBytes(),
+    return Response(
+      body: await file.readAsBytes(),
       headers: {HttpHeaders.contentTypeHeader: contentType},
     );
   } else {
@@ -75,7 +80,10 @@ Future<Response> _serveStaticHtml(String filename) async {
       headers: {'Content-Type': 'text/html; charset=utf-8'},
     );
   }
-  return Response(statusCode: 404, body: '$filename not found');
+  return Response(
+    statusCode: 404,
+    body: '$filename not found',
+  );
 }
 
 String _getContentType(String path) {
@@ -111,4 +119,4 @@ bool _isBinaryFile(String path) {
          path.endsWith('.eot') ||
          path.endsWith('.otf') ||
          path.endsWith('.ico');
-}   
+}
