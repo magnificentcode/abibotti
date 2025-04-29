@@ -1,5 +1,10 @@
+
+
+
+
 import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:mime/mime.dart'; // pour détecter le Content-Type automatiquement si besoin
 import 'routes/gpt.dart' as gpt;
 import 'routes/correction.dart' as correction;
 
@@ -46,13 +51,43 @@ Future<Response?> tryServeStatic(String path) async {
   if (!await file.exists()) return null;
 
   final contentType = _getContentType(path);
-  return Response(
-    body: await file.readAsString(),
-    headers: {HttpHeaders.contentTypeHeader: contentType},
-  );
+  final isBinary = _isBinaryFile(path);
+
+  if (isBinary) {
+    // Lire les fichiers binaires en bytes
+    return Response.body(
+      await file.readAsBytes(),
+      headers: {HttpHeaders.contentTypeHeader: contentType},
+    );
+  } else {
+    // Lire les fichiers textes en string
+    return Response(
+      body: await file.readAsString(),
+      headers: {HttpHeaders.contentTypeHeader: contentType},
+    );
+  }
+}
+
+Future<Response> _serveStaticHtml(String filename) async {
+  final file = File('public/$filename');
+  if (await file.exists()) {
+    final content = await file.readAsString();
+    return Response(
+      body: content,
+      headers: {'Content-Type': 'text/html; charset=utf-8'},
+    );
+  }
+  return Response(statusCode: 404, body: '$filename not found');
 }
 
 String _getContentType(String path) {
+  // Essaie d'utiliser mime si possible
+  final mimeType = lookupMimeType(path);
+  if (mimeType != null) {
+    return mimeType;
+  }
+
+  // Sinon fallback manuel
   if (path.endsWith('.html')) return 'text/html; charset=utf-8';
   if (path.endsWith('.css')) return 'text/css';
   if (path.endsWith('.js')) return 'application/javascript';
@@ -63,17 +98,23 @@ String _getContentType(String path) {
   if (path.endsWith('.svg')) return 'image/svg+xml';
   if (path.endsWith('.woff2')) return 'font/woff2';
   if (path.endsWith('.woff')) return 'font/woff';
-  return 'application/octet-stream';
+  if (path.endsWith('.ttf')) return 'font/ttf';
+  if (path.endsWith('.eot')) return 'application/vnd.ms-fontobject';
+  if (path.endsWith('.otf')) return 'font/otf';
+  if (path.endsWith('.ico')) return 'image/x-icon';
+  return 'application/octet-stream'; // Par défaut
 }
 
-Future<Response> _serveStaticHtml(String filename) async {
-  final file = File('public/$filename');
-  if (await file.exists()) {
-    final content = await file.readAsString();
-    return Response(
-      body: content,
-      headers: {'Content-Type': 'text/html'},
-    );
-  }
-  return Response(statusCode: 404, body: '$filename not found');
+bool _isBinaryFile(String path) {
+  return path.endsWith('.png') ||
+         path.endsWith('.jpg') ||
+         path.endsWith('.jpeg') ||
+         path.endsWith('.webp') ||
+         path.endsWith('.svg') ||
+         path.endsWith('.woff') ||
+         path.endsWith('.woff2') ||
+         path.endsWith('.ttf') ||
+         path.endsWith('.eot') ||
+         path.endsWith('.otf') ||
+         path.endsWith('.ico');
 }
