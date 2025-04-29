@@ -60,7 +60,7 @@ Future<Response?> tryServeStatic(String path) async {
 
   if (isBinary) {
     return Response.bytes(
-      await file.readAsBytes(),
+      body: await file.readAsBytes(),  // 🛠️ body: obligatoire maintenant
       headers: {HttpHeaders.contentTypeHeader: contentType},
     );
   } else {
