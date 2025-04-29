@@ -59,8 +59,8 @@ Future<Response?> tryServeStatic(String path) async {
   final isBinary = _isBinaryFile(path);
 
   if (isBinary) {
-    return Response(
-      body: await file.readAsBytes(),
+    return Response.bytes(
+      await file.readAsBytes(),
       headers: {HttpHeaders.contentTypeHeader: contentType},
     );
   } else {
