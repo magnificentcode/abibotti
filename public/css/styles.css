@@ -69,16 +69,22 @@ p {
 .nav-home a {
   text-decoration: none;
   font-weight: 600;
-  color: var(--background);
+  color: var(--background); /* ← vert foncé */
   transition: color 0.2s ease;
 }
+
 
 .nav-links {
   display: flex;
   gap: 1rem;
   list-style: none;
   align-items: center;
-}
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--background); /* ← vert foncé */
+    transition: color 0.2s ease;
+  }
+
 
 .nav-links li {
   display: flex;
@@ -140,7 +146,8 @@ p {
 /* ============================= */
 .hero {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 0 1rem 3rem 1rem; /* supprime padding en haut */
+  margin-top: 0; /* supprime toute marge automatique */
 }
 
 .hero img {
@@ -609,6 +616,8 @@ p {
   color: #243010;
   margin-bottom: 1rem;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 
 /* contact stuff*/
