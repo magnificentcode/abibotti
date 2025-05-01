@@ -1,86 +1,95 @@
+/* ============================= */
+/* 🌿 VARIABLES GLOBALES         */
+/* ============================= */
 :root {
   --background: #243010;
-  --highlight: #fff;
-  --accent: #FFD700; /* par exemple */
-  --primary: #243010;
+  --highlight: #FFF9E6;
   --accent: #E8B923;
+  --primary: #243010;
   --light: #ececec;
   --font-main: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-  --highlight:#FFF9E6;
-  
-
-
 }
 
+
+/* ============================= */
+/* 🌐 RESET & TYPOGRAPHIE        */
+/* ============================= */
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   background-color: var(--light);
-  color: var(--accent);
+  color: var(--primary);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
 
+h1, h2, h3 {
+  font-weight: 700;
+  color: var(--background);
+  font-family: var(--font-main);
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.3rem; }
+
+p {
+  font-size: 1.05rem;
+  font-family: var(--font-main);
+  color: var(--background);
+  margin-bottom: 1rem;
 }
 
 
-/* index stuff*/
-
-
-.hero {
-  background: url('../assets/img/Heros2.webp') center/cover no-repeat;
-  height: 100vh;
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-top: 100px;
-  margin-bottom: 10px;
-  
-}
-
-.main-aloita {
-margin-top: 0.3rem;
-}
-
-.site-header {
-  background-color: var(--background);
-  padding: 1.1rem 0,1rem;
-  padding-bottom: 20px;
-  padding-top: 20px;
-}
-
-
-
-.site-header {
-  background-color: var(--background);
-  padding: 1.1rem 0,1rem;
-}
-
+/* ============================= */
+/* 📌 NAVIGATION / HEADER        */
+/* ============================= */
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 1.0rem;
-  background-color: var(--background);
+  padding: 1rem 2rem;
+  margin-left: 2.5rem;
+  margin-right: 3.0rem;
+
+}
+.nav-home:hover {
+  color: var(--accent);
 }
 
-.logo img {
-  height: 36px;
-  filter: brightness(0) saturate(100%) invert(1); /* rend le PNG blanc */
-  margin-right: 14rem;
-  
+.nav-home {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-home a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--background);
+  transition: color 0.2s ease;
 }
 
 .nav-links {
   display: flex;
+  gap: 1rem;
   list-style: none;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
+  align-items: center;
+}
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .nav-links a {
-  color: var(--highlight);
   text-decoration: none;
-  font-weight: bold;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
   transition: color 0.2s ease;
 }
 
@@ -89,74 +98,35 @@ margin-top: 0.3rem;
 }
 
 
+/* ============================= */
+/* 🔘 BOUTONS                    */
+/* ============================= */
+.primary-btn-second ,
 
-.overlay-1{
-  line-height: 1.1;
-  padding: 2rem;
-  text-align: center;
-  position: absolute;
-  top: 20%;
-  width: 100%;
-  color:aliceblue; /* dark gray */
-  font-family: 'Inter', sans-serif;
-  text-shadow: 0 1px 5px rgba(0,0,0,0.25);
-
-
-}
-
-.overlay h1 {
-  font-size: 2.0rem;
-  max-width: 00px;
-  margin: 0 auto;
-  
-}
-
-.line1 {
-  font-size: 2.8rem;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  
-}
-
-.line2 {
-  font-size: 3.4rem;
-  font-weight: 800;
-  margin-top: auto;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  text-transform: uppercase;
-  letter-spacing: 3px;
- 
-}
-
-.about-abibotti {
-  max-width: 800px;
-  margin: 4rem auto;
-  text-align: center;
-  color:var(--background);
-  margin-top: 4px;
-}
-
-.mitä-abibotti-osaa {
-  text-align: left;
-  display: inline-block;
-}
-
-
-.get-started {
-  text-align: center;
-  margin: 3rem 0;
+.primary-btn {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.4rem 1.2rem;
+  margin-bottom: 2.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 1rem;
+  height: 3rem;        /* fixe la hauteur */
+  box-sizing: border-box;
 }
 
 .btn-start {
-  background-color:black;
+  background-color: var(--primary);
   color: var(--light);
-  padding: 1rem 2rem;
-  text-decoration: none;
-  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .btn-start:hover {
@@ -164,13 +134,70 @@ margin-top: 0.3rem;
   color: var(--primary);
 }
 
-.placeholder {
+
+/* ============================= */
+/* 🖼️ HERO                      */
+/* ============================= */
+.hero {
   text-align: center;
-  margin-bottom: 5rem;
-  font-style: italic;
-  color: #888;
+  padding: 3rem 1rem;
 }
 
+.hero img {
+  display: block;                /* évite les espaces blancs */
+  margin: 0 auto;                /* centre horizontalement */
+  max-width: 90%;                /* limite la taille à 90% du conteneur */
+  height: auto;                  /* respecte les proportions originales */
+  border-radius: 1rem;
+}
+
+.hero p {
+  font-size: 1.8rem;
+  margin: 1.5rem 0;
+  color: var (--background);
+  font-weight: 600;
+}
+
+
+/* ============================= */
+/* 📚 ABOUT SECTION             */
+/* ============================= */
+.about-abibotti {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.about-abibotti ul {
+  text-align: left;
+  margin-top: 1rem;
+}
+
+
+/* ============================= */
+/* 🔻 FOOTER                    */
+/* ============================= */
+footer {
+  background-color: var(--background);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+}
+
+footer a {
+  color: white;
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+
+
+/* ============================= */
+/* 💡 TON STYLE EXISTANT        */
+/* ============================= */
+/* (Ce bloc contient tes styles pour .studyhub, .math-toolbar, .selectors, etc.)
+   Tu n'as rien besoin de changer ici. Si besoin de refactoriser, dis-le-moi 😉 */
 
 
 

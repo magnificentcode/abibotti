@@ -8,6 +8,13 @@ final jwtSecret = const String.fromEnvironment('JWT_SECRET');
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method == HttpMethod.post) {
+    if (jwtSecret.isEmpty) {
+      return Response.json(
+        statusCode: 500,
+        body: {'message': 'JWT_SECRET non défini côté serveur.'},
+      );
+    }
+
     final body = await context.request.body();
     final data = jsonDecode(body);
 
@@ -43,16 +50,20 @@ Future<Response> onRequest(RequestContext context) async {
       );
     }
 
-    final jwt = JWT({
-      'userId': user['id'],
-      'email': user['email'],
-      'role': 'user',
-    });
+    final jwt = JWT(
+      {
+        'userId': user['id'],
+        'email': user['email'],
+        'role': 'user',
+      },
+      maxAge: const Duration(hours: 2),
+    );
 
     final token = jwt.sign(SecretKey(jwtSecret));
 
     return Response.json(
       body: {'token': token},
+      headers: {'access-control-allow-origin': '*'},
     );
   }
 

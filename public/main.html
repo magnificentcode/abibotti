@@ -2,71 +2,61 @@
 <html lang="fi">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abibotti | Tervetuloa</title>
 
-  <!-- 🎨 Styles & Fonts -->
+  <!-- Pico + Ton CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
   <link rel="stylesheet" href="css/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- ✨ Animate on Scroll (AOS) -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
 
-  <!-- ✅ Navigation -->
-  <header class="site-header">
+  <header>
     <nav class="navbar">
-      <a href="/" class="logo">
-        <img src="/public/assets/img/abibotti_loppu.jpg" alt="Abibotti Logo" />
-      </a>
+      <strong class="nav-home" style="font-size: 1.25rem;"><a href="/main.html"></a>Abibotti</strong>
       <ul class="nav-links">
         <li><a href="/studyhub.html">Yo-Koe</a></li>
         <li><a href="/contact.html">Ota yhteyttä</a></li>
+        <li><a href="/login.html">Kirjaudu sisään</a></li>
+        <li><a class="primary-btn" href="/signup.html">Aloita</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ✅ Hero Section -->
-  <section class="hero">
-    <div class="overlay-1">
-      <p class="line2">Tervetuloa Abibotille!</p>
-      <a href="#about" class="primary-btn-second">Tutustua</a>
-    </div>
+  <section class="hero" data-aos="fade-up">
+    <img src="/public/assets/img/Heros2.webp" alt="Abibotti Hero" />
+    <p>Tervetuloa Abibotille !</p>
+    <a href="/signup.html" class="btn-start">Aloita</a>
   </section>
 
-  <!-- ✅ About Section -->
   <section id="about" class="about-abibotti" data-aos="fade-up">
     <h2>🎓 Mitä on Abibotti?</h2>
-    <p><strong>Abibotti</strong> on tekoälyä käyttävä oppimisapuri YO-kokeisiin valmistautumiseen. 
-      Olitpa lukiossa tai valmistautumassa YO-kokeeseen itsenäisesti, Abibotti auttaa sinua harjoittelemaan tehokkaasti ja itsenäisesti.
-    </p>
+    <p><strong>Abibotti</strong> on tekoälyä käyttävä oppimisapuri YO-kokeisiin valmistautumiseen.</p>
 
     <h2>🧠 Mitä Abibotti osaa?</h2>
-    <ul class="mitä-abibotti-osaa">
+    <ul>
       <li>✅ Luo realistisia kokeita oikeista aineista ja aiemmista YO-teemoista.</li>
-      <li>✅ Arvioi vastauksesi: antaa <strong>arvosanan</strong>, <strong>korjatun version</strong> ja <strong>personoidun palautteen</strong>.</li>
+      <li>✅ Arvioi vastauksesi avec arvosana, version korjattu ja palautteen.</li>
     </ul>
   </section>
 
-  <!-- ✅ Get Started Section -->
-  <main>
-    <section class="get-started" data-aos="fade-up">
-      <a href="/signup.html" class="btn-start">Aloita</a>
-    </section>
+  <section class="about-abibotti" data-aos="fade-up">
+    <a href="/signup.html" class="btn-start">Aloita</a>
+    <p style="margin-top: 1rem;">🔧 Rakenteilla on jotain siistiä... nähdään pian!</p>
+  </section>
 
-    <section class="placeholder" data-aos="fade-up">
-      <p>🔧 Rakenteilla on jotain siistiä... nähdään pian!</p>
-    </section>
-  </main>
+  <footer>
+    <p>© 2025 Abibotti</p>
+    <div>
+      <a href="#">📘</a>
+      <a href="#">📷</a>
+      <a href="#">🐦</a>
+    </div>
+  </footer>
 
-  <!-- ✨ Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-
+  <script>AOS.init();</script>
 </body>
 </html>

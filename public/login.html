@@ -1,63 +1,79 @@
-import 'package:dart_frog/dart_frog.dart';
-import 'package:bcrypt/bcrypt.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'dart:convert';
-import '../../database.dart'; // Note le chemin relatif
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abibotti | Kirjaudu</title>
 
-const jwtSecret = 'TON_SUPER_JWT_SECRET'; // ⚡ Change ça en prod !!
+  <!-- Pico CSS + Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
 
-Future<Response> onRequest(RequestContext context) async {
-  if (context.request.method == HttpMethod.post) {
-    final body = await context.request.body();
-    final data = jsonDecode(body);
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <strong class="nav-home" style="font-size: 1.25rem;"><a href="/main.html"></a>Abibotti</strong>
+      <ul class="nav-links">
+        <li><a href="/studyhub.html">Yo-Koe</a></li>
+        <li><a href="/contact.html">Ota yhteyttä</a></li>
+        <li><a href="/login.html">Kirjaudu sisään</a></li>
+        <li><a class="primary-btn" href="/signup.html">Aloita</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    final email = data['email'];
-    final password = data['password'];
+  <!-- Login Form -->
+  <main class="container" style="margin: 2rem auto; max-width: 400px; padding: 1rem;">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--background);">Kirjaudu sisään</h2>
+    <form method="POST" action="/login" class="form-grid">
+      <label for="email">Sähköposti</label>
+      <input type="email" id="email" name="email" placeholder="anna sähköpostisi" required />
 
-    if (email == null || password == null) {
-      return Response.json(
-        statusCode: 400,
-        body: {'message': 'Email et mot de passe requis.'},
-      );
-    }
+      <label for="password">Salasana</label>
+      <input type="password" id="password" name="password" placeholder="salasanasi" required />
 
-    final result = await db.query(
-      'SELECT id, email, password FROM users WHERE email = @email',
-      substitutionValues: {'email': email},
-    );
+      <button type="submit" class="primary-btn" style="margin-top: 1rem; width: 100%; background-color: var(--background); color: var(--light);">
+        Kirjaudu
+      </button>
 
-    if (result.isEmpty) {
-      return Response.json(
-        statusCode: 401,
-        body: {'message': 'Identifiants invalides.'},
-      );
-    }
+      <div id="login-error" style="display: none; color: red; text-align: center; margin-top: 1rem;">
+        Sähköposti tai salasana on virheellinen.
+      </div>
+    </form>
 
-    final user = result.first;
-    final hashedPassword = user['password'] as String;
+    <p style="text-align: center; margin-top: 1rem;">
+      Eikö sinulla ole tiliä? <a href="/signup.html">Luo tili</a>
+    </p>
+  </main>
 
-    if (!BCrypt.checkpw(password, hashedPassword)) {
-      return Response.json(
-        statusCode: 401,
-        body: {'message': 'Identifiants invalides.'},
-      );
-    }
+  <!-- Footer -->
+  <footer style="margin-top: 4rem; text-align: center; font-size: 0.875rem; color: var(--muted);">
+    <p>&copy; 2025 Abibotti. Kaikki oikeudet pidätetään.</p>
+  </footer>
 
-    final jwt = JWT({
-      'userId': user['id'],
-      'email': user['email'],
-      'role': 'user',
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Simulation d’erreur après soumission
+    document.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault(); // Empêche l'envoi réel (à remplacer avec un vrai backend plus tard)
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Simule une mauvaise combinaison
+      if (email !== "user@example.com" || password !== "password123") {
+        document.getElementById('login-error').style.display = 'block';
+      } else {
+        window.location.href = "/dashboard.html";
+      }
     });
-
-    final token = jwt.sign(SecretKey(jwtSecret));
-
-    return Response.json(
-      body: {'token': token},
-    );
-  }
-
-  return Response.json(
-    statusCode: 405,
-    body: {'message': 'Méthode non autorisée.'},
-  );
-}
+  </script>
+</body>
+</html>

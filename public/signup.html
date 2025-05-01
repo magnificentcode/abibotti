@@ -1,101 +1,88 @@
-import 'package:dart_frog/dart_frog.dart';
-import 'package:bcrypt/bcrypt.dart';
-import 'dart:convert';
-import '../../database.dart'; // Note le chemin relatif
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abibotti | Rekisteröidy</title>
 
-Future<Response> onRequest(RequestContext context) async {
-  if (context.request.method == HttpMethod.post) {
-    final body = await context.request.body();
-    final data = jsonDecode(body);
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
 
-    final fullName = data['fullname'];
-    final email = data['email'];
-    final password = data['password'];
-    final confirmPassword = data['confirm-password'];
+  <header>
+    <nav class="navbar">
+      <strong class="nav-home" style="font-size: 1.25rem;"><a href="/main.html"></a>Abibotti</strong>
+      <ul class="nav-links">
+        <li><a href="/studyhub.html">Yo-Koe</a></li>
+        <li><a href="/contact.html">Ota yhteyttä</a></li>
+        <li><a href="/login.html">Kirjaudu sisään</a></li>
+        <li><a class="primary-btn" href="/signup.html">Aloita</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    if (fullName == null || email == null || password == null || confirmPassword == null) {
-      return Response.json(
-        statusCode: 400,
-        body: {'message': 'Tous les champs sont requis.'},
-      );
-    }
+  <main class="container" style="margin: 2rem auto; max-width: 500px; padding: 1rem;">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--background);">Luo uusi tili</h2>
+    <form id="signup-form" class="form-grid">
+      <label for="fullname">Nimi</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Etunimi Sukunimi" required>
 
-    if (password != confirmPassword) {
-      return Response.json(
-        statusCode: 400,
-        body: {'message': 'Les mots de passe ne correspondent pas.'},
-      );
-    }
+      <label for="email">Sähköposti</label>
+      <input type="email" id="email" name="email" placeholder="esimerkki@email.com" required>
 
-    // Vérifie si l'email est déjà utilisé
-    final result = await db.query(
-      'SELECT * FROM users WHERE email = @email',
-      substitutionValues: {'email': email},
-    );
+      <label for="password">Salasana</label>
+      <input type="password" id="password" name="password" required>
 
-    if (result.isNotEmpty) {
-      return Response.json(
-        statusCode: 409,
-        body: {'message': 'Cet email est déjà utilisé.'},
-      );
-    }
+      <label for="confirm-password">Vahvista salasana</label>
+      <input type="password" id="confirm-password" name="confirm-password" required>
 
-    // Hash le mot de passe
-    final hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+      <button type="submit" class="primary-btn" style="margin-top: 1rem; width: 100%; background-color: var(--background); color: var(--light);">
+        Rekisteröidy
+      </button>
 
-    // Insert user dans PostgreSQL
-    await db.query(
-      'INSERT INTO users (full_name, email, password) VALUES (@fullName, @email, @password)',
-      substitutionValues: {
-        'fullName': fullName,
-        'email': email,
-        'password': hashedPassword,
-      },
-    );
+      <div id="signup-error" style="display: none; color: red; text-align: center; margin-top: 1rem;"></div>
+    </form>
 
-    return Response.json(
-      statusCode: 201,
-      body: {'message': 'Utilisateur inscrit avec succès.'},
-    );
-  }
+    <p style="text-align: center; margin-top: 1rem;">
+      Onko sinulla jo tili? <a href="/login.html">Kirjaudu sisään</a>
+    </p>
+  </main>
 
-  return Response.json(
-    statusCode: 405,
-    body: {'message': 'Méthode non autorisée.'},
-  );
-}
+  <footer style="margin-top: 4rem; text-align: center; font-size: 0.875rem; color: var(--muted);">
+    <p>&copy; 2025 Abibotti. Kaikki oikeudet pidätetään.</p>
+  </footer>
 
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form');
-  
-    form.addEventListener('submit', async (e) => {
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', async function (e) {
       e.preventDefault();
-  
-      const formData = new FormData(form);
+
+      const form = e.target;
       const data = {
-        fullname: formData.get('fullname'),
-        email: formData.get('email'),
-        password: formData.get('password'),
-        'confirm-password': formData.get('confirm-password')
+        fullname: form.fullname.value,
+        email: form.email.value,
+        password: form.password.value,
+        'confirm-password': form['confirm-password'].value
       };
-  
-      const response = await fetch('/signup', {
+
+      const res = await fetch('/signup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
-  
-      if (response.ok) {
-        // ✅ Signup réussi → Redirige vers Studyhub
-        window.location.href = '/studyhub.html';
+
+      const result = await res.json();
+      const errorDiv = document.getElementById('signup-error');
+
+      if (!res.ok) {
+        errorDiv.style.display = 'block';
+        errorDiv.textContent = result.message || 'Virhe tapahtui.';
       } else {
-        const result = await response.json();
-        alert(result.message || 'Erreur à l’inscription.');
+        localStorage.setItem('token', result.token);
+        window.location.href = '/dashboard.html';
       }
     });
-  });
   </script>
+</body>
+</html>

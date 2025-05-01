@@ -1,10 +1,20 @@
 import 'package:dart_frog/dart_frog.dart';
 import 'package:bcrypt/bcrypt.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'dart:convert';
-import '../../database.dart'; // Connexion à PostgreSQL
+import '../../database.dart';
+
+final jwtSecret = const String.fromEnvironment('JWT_SECRET');
 
 Future<Response> onRequest(RequestContext context) async {
   if (context.request.method == HttpMethod.post) {
+    if (jwtSecret.isEmpty) {
+      return Response.json(
+        statusCode: 500,
+        body: {'message': 'JWT_SECRET non défini côté serveur.'},
+      );
+    }
+
     final body = await context.request.body();
     final data = jsonDecode(body);
 
@@ -27,7 +37,6 @@ Future<Response> onRequest(RequestContext context) async {
       );
     }
 
-    // Vérifier si email existe
     final result = await db.query(
       'SELECT * FROM users WHERE email = @email',
       substitutionValues: {'email': email},
@@ -40,12 +49,10 @@ Future<Response> onRequest(RequestContext context) async {
       );
     }
 
-    // Hashage du mot de passe
     final hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-    // Enregistrement en base
-    await db.query(
-      'INSERT INTO users (full_name, email, password) VALUES (@fullName, @email, @password)',
+    final insertResult = await db.query(
+      'INSERT INTO users (full_name, email, password) VALUES (@fullName, @email, @password) RETURNING id',
       substitutionValues: {
         'fullName': fullName,
         'email': email,
@@ -53,9 +60,26 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
 
+    final userId = insertResult.first['id'];
+
+    final jwt = JWT(
+      {
+        'userId': userId,
+        'email': email,
+        'role': 'user',
+      },
+      maxAge: const Duration(hours: 2),
+    );
+
+    final token = jwt.sign(SecretKey(jwtSecret));
+
     return Response.json(
       statusCode: 201,
-      body: {'message': 'Utilisateur inscrit avec succès.'},
+      body: {
+        'message': 'Utilisateur inscrit avec succès.',
+        'token': token
+      },
+      headers: {'access-control-allow-origin': '*'},
     );
   }
 
