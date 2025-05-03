@@ -2,6 +2,7 @@
 <html lang="fi">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abibotti | Tervetuloa</title>
 
@@ -13,24 +14,34 @@
 </head>
 <body>
 
-  <header style="margin-top: 0; padding-top: 0;"></header>
-    <nav class="navbar">
-      <strong class="nav-home" style="font-size: 1.25rem;"><a href="/"></a>Abibotti</strong>
-      <ul class="nav-links">
+  <!-- Header / Navbar -->
+  <header style="margin-top: 0; padding-top: 0;">
+    <nav class="navbar" >
+      <strong class="nav-home">
+        <a href="/main.html" style="text-decoration: none; color: var(--background);">Abibotti</a>
+      </strong>
+      <ul class="nav-links" style="display: flex; gap: 1.5rem; align-items: center; list-style: none; margin: 0;">
         <li><a href="/studyhub.html">Yo-Koe</a></li>
         <li><a href="/contact.html">Ota yhteyttä</a></li>
         <li><a href="/login.html">Kirjaudu sisään</a></li>
-        <li><a class="primary-btn" href="/signup.html">Aloita</a></li>
+        <li><a class="primary-btn" href="/signup.html" style="padding: 0.5rem 1.2rem; border-radius: 8px; background-color: var(--background); color: var(--light); text-decoration: none;">Aloita</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="hero" data-aos="fade-up">
-    <img src="/public/assets/img/Heros2.webp" alt="Abibotti Hero" />
-    <p>Tervetuloa Abibotille !</p>
-    <a href="/signup.html" class="btn-start">Aloita</a>
+  <!-- Hero Section -->
+  <section class="hero" data-aos="fade-up" style="padding: 0; margin: 0;">
+    <div style="position: relative; text-align: center;">
+      <img src="/public/assets/img/Heros2.webp" alt="Abibotti Hero" style="width: 100%; border-radius: 2rem;">
+      <div style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: var(--background);">
+        <h1 style="font-size: 2.5rem; font-weight: bold;">Tervetuloa Abibotille !</h1>
+        <p style="font-size: 1.1rem;">Valitse aine, generoi yo-kysymys ja saat välittömän palautteen Clara-tekoälyltä.</p>
+        <a href="/signup.html" class="btn-start" style="margin-top: 1rem; display: inline-block; padding: 0.6rem 1.2rem; background-color: var(--background); color: var(--light); border-radius: 8px; text-decoration: none;">Aloita</a>
+      </div>
+    </div>
   </section>
 
+  <!-- About Section -->
   <section id="about" class="about-abibotti" data-aos="fade-up">
     <h2>🎓 Mitä on Abibotti?</h2>
     <p><strong>Abibotti</strong> on tekoälyä käyttävä oppimisapuri YO-kokeisiin valmistautumiseen.</p>
@@ -38,16 +49,18 @@
     <h2>🧠 Mitä Abibotti osaa?</h2>
     <ul>
       <li>✅ Luo realistisia kokeita oikeista aineista ja aiemmista YO-teemoista.</li>
-      <li>✅ Arvioi vastauksesi avec arvosana, version korjattu ja palautteen.</li>
+      <li>✅ Arvioi vastauksesi: antaa <strong>arvosanan</strong>, <strong>korjatun version</strong> ja <strong>personoidun palautteen</strong>.</li>
     </ul>
   </section>
 
+  <!-- Outro Section -->
   <section class="about-abibotti" data-aos="fade-up">
-    <a href="/signup.html" class="btn-start">Aloita</a>
+    <a href="/signup.html" class="btn-start" style="padding: 0.6rem 1.2rem; background-color: var(--background); color: var(--light); border-radius: 8px; text-decoration: none;">Aloita</a>
     <p style="margin-top: 1rem;">🔧 Rakenteilla on jotain siistiä... nähdään pian!</p>
   </section>
 
-  <footer>
+  <!-- Footer -->
+  <footer style="background-color: var(--background); color: var(--light); text-align: center; padding: 2rem 1rem;">
     <p>© 2025 Abibotti</p>
     <div>
       <a href="#">📘</a>
@@ -56,6 +69,7 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>AOS.init();</script>
 </body>

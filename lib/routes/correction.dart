@@ -1,9 +1,8 @@
 import 'dart:io'; // pour Platform.environment
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io'; // ✅ pour Platform.environment
+// ✅ pour Platform.environment
 import 'package:dart_frog/dart_frog.dart';
-import 'package:http/http.dart' as http;
 
 // 🔐 Clé OpenAI depuis l'environnement
 final openAiKey = Platform.environment['OPENAI_API_KEY'];
