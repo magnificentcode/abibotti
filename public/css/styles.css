@@ -46,19 +46,13 @@ p {
 /* ============================= */
 /* 📌 NAVIGATION / HEADER        */
 /* ============================= */
-header{
-  display: flex;
-  justify-conent: flex-end;
-  align-item: center;
-  padding: 30px 10p%;
-}
-
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem; 
+  padding: 1rem 2rem;
+  margin-left: 2.5rem;
+  margin-right: 3.0rem;
 
 }
 .nav-home:hover {
@@ -66,10 +60,10 @@ header{
 }
 
 .nav-home {
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  margin-right: auto;
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  align-items: center;
 }
 
 .nav-home a {
@@ -85,16 +79,15 @@ header{
   gap: 1rem;
   list-style: none;
   align-items: center;
-  text-decoration: none;
-   font-weight: 600;
-  color: var(--background); /* ← vert foncé */
-  transition: color 0.2s ease;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--background); /* ← vert foncé */
+    transition: color 0.2s ease;
   }
 
 
 .nav-links li {
-  display: inline-block;
-  padding: 0px 20px; 
+  display: flex;
   align-items: center;
   height: 100%;
 }
@@ -103,7 +96,7 @@ header{
   text-decoration: none;
   font-weight: 600;
   color: var(--primary);
-  transition: color 0.3s ease 0s;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
@@ -631,104 +624,3 @@ html {
 }
 
 /* contact stuff*/
-
-
-
-
-
-
-
-
-/*la video
-
-* {
-    box-sizing :border-box;
-    margin: 0;
-    padding: 0;
-    background-color: #24252A;
-  }
-  
-  li, a, button {
-    font-family: "arial", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    color: #edf0f1;
-  
-  }
-  
-  header{
-    display: flex;
-    justify-conent: flex-end;
-    align-item: center;
-    padding: 30px 10p%;
-  }
-
-  .logo {
-    cursor: pointer;
-    margin-right: auto;
-  }
-
-  .nav_links {
-    list-styles: none;
-  }
-
-  .nav_links li {
-    display: inline-block;
-    padding: opx 20px;
-  }
-
-  .nav_links li a {
-    transition: all 0.3s ease 0s;
-  }
-
- .nav_links li a:hover {
-    color: #0088a9;
- }
-
- button {
-    margin-left: 20px;
-    padding: 9px 25px;
-    background-color: rgba(0,136,169,1);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition:all 0.3s ease 0s;
- }
-
- button:hover {
-    background-color: rgba(0,136,169,1);
-
-
-
-
-    <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <title>Navbar</title>
-  <link rel="stylesheet" href="/css/navnav.css">
-</head>
-<body>
-
-  <header>
-    <img class="logo" src="images/logo.svg" alt="logo">
-
-    <nav>
-      <ul class="nav_links">
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </nav>
-
-    <a class="cta" href="#">Contact</a>
-  </header>
-
-</body>
-</html>
-
- }
-    */
