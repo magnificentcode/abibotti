@@ -100,5 +100,22 @@ async function envoyerReponsePourCorrection() {
   }
 }
 
-document.getElementById("submit-answer")
-  .addEventListener("click", envoyerReponsePourCorrection);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const burger = document.querySelector('.burger');
+  const navbar = document.querySelector('.navbar');
+
+  if (burger && navbar) {
+    burger.addEventListener('click', () => {
+      navbar.classList.toggle('open');
+      burger.classList.toggle('open'); // 👈 toggle animation
+    });
+
+    navbar.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navbar.classList.remove('open');
+        burger.classList.remove('open'); // 👈 reset animation
+      });
+    });
+  }
+});

@@ -29,6 +29,90 @@ header {
   border-top: none;
 }
 
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.burger div {
+  height: 3px;
+  background-color: var(--vert);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+
+/* 🧁 Style de base du menu - toujours visible sur desktop */
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* 📱 Mobile version */
+@media (max-width: 768px) {
+  .burger {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: auto; /* place à droite dans la navbar */
+  }
+
+  .burger div {
+    height: 3px;
+    background-color: var(--vert);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links {
+    display: none !important; /* 👈 cache le menu par défaut */
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--blanche);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  .burger.open div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .burger.open div:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .burger.open div:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .navbar.open .nav-links {
+    display: flex; /* 👈 affiche seulement quand burger activé */
+  }
+
+  .abibottiLogo {
+    display: none !important; /* cache le logo dans la barre du haut */
+  }
+
+  .mobile-only {
+    display: block;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+
 
 .studyhub {
   padding: 2rem;
@@ -105,17 +189,19 @@ p {
   color: var(--jaune);
 }
 
-.nav-links {
-  display: flex;
-  list-style: none;
-  align-items: center;
-  text-decoration: none;
-  font-weight: 600;
-  color: var(--background);
-  transition: color 0.2s ease;
-  gap: 1rem;
-  padding-top: 0.3rem;
-  margin: 0;
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--background);
+    transition: color 0.2s ease;
+    gap: 1rem;
+    padding-top: 0.3rem;
+    margin: 0;
+  }
 }
 .nav-item {
   display: flex;
@@ -336,27 +422,7 @@ footer a {
   font-size: 1rem;
 }
 
-.selectors select {
-  appearance: none;                             /* Supprime le style natif */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 100%;
-  max-width: 600%;                             /* Limite la largeur */
-  background-color: white;
-  color: black;
-  border: 2px solid black;
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;             /* Padding avec espace pour l'icône */
-  font-size: 1.05rem;
-  font-weight: 600;
-  font-family: var(--font-main);
-  cursor: pointer;
-  background-image: url("/assets");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
+
 
 .selectors select:focus {
   outline: none;
@@ -625,7 +691,7 @@ math-field#math-editor {
   margin-top: 1rem;
 }
 
-}
+
 html {
   scroll-behavior: smooth;
 }
