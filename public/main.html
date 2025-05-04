@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Z+RzD3E4FmG+SYEJb5PzHTnA3BBTV3dRUpWyO7eyEG7U0WTbHt0Bpj5fP2E6KxGQ+gx2gR06VgV+5wxvN9wI2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -18,19 +19,9 @@
   <header>
     <nav class="navbar">
       <strong class="abibottiLogo">
-        <a href="/main.html">ABIBOTTI</a>
+        <a href="/main.html" >ABIBOTTI</a>
       </strong>
-  
-      <!-- 🍔 Burger button -->
-      <div class="burger">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-  
-      <!-- 🔗 Navigation links -->
       <ul class="nav-links">
-        <li class="nav-item mobile-only"><a href="/main.html">ABIBOTTI</a></li>
         <li class="nav-item"><a href="/studyhub.html">Yo-Koe</a></li>
         <li class="nav-item"><a href="/contact.html">Ota yhteyttä</a></li>
         <li class="nav-item"><a href="/login.html">Kirjaudu sisään</a></li>
@@ -48,7 +39,7 @@
              loading="lazy"
              style="width: 100%; border-radius: 2rem;">
       </picture>
-      <div style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: var(--background);">
+      <div class="hero-text-overlay">
         <h1 style="font-size: 2.5rem; font-weight: bold;">Tervetuloa Abibotille !</h1>
         <p style="font-size: 1.1rem;">Valitse aine, generoi yo-kysymys ja saat välittömän palautteen Clara-tekoälyltä.</p>
         <a href="/signup.html" class="btn-start" style="margin-top: 1rem; display: inline-block; padding: 0.6rem 1.2rem; background-color: var(--background); color: var(--light); border-radius: 8px; text-decoration: none;">Aloita</a>
@@ -75,17 +66,18 @@
   </section>
 
   <!-- Footer -->
-  <footer style="background-color: var(--background); color: var(--light); text-align: center; padding: 2rem 1rem;">
+  <footer>
+    <div class="container-footer">
     <p>© 2025 Abibotti</p>
-    <div>
-      <a href="#">📘</a>
-      <a href="#">📷</a>
-      <a href="#">🐦</a>
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
     </div>
+  </div>
   </footer>
 
   <!-- Scripts -->
-  <script src="/main.js"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>AOS.init();</script>
 </body>

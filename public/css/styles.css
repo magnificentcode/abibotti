@@ -29,90 +29,6 @@ header {
   border-top: none;
 }
 
-.burger {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.burger div {
-  height: 3px;
-  background-color: var(--vert);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-
-/* 🧁 Style de base du menu - toujours visible sur desktop */
-.nav-links {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-/* 📱 Mobile version */
-@media (max-width: 768px) {
-  .burger {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 25px;
-    height: 20px;
-    cursor: pointer;
-    margin-left: auto; /* place à droite dans la navbar */
-  }
-
-  .burger div {
-    height: 3px;
-    background-color: var(--vert);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  .nav-links {
-    display: none !important; /* 👈 cache le menu par défaut */
-    flex-direction: column;
-    width: 100%;
-    background-color: var(--blanche);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    padding: 1rem;
-  }
-
-  .burger.open div:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-  
-  .burger.open div:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .burger.open div:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
-
-  .navbar.open .nav-links {
-    display: flex; /* 👈 affiche seulement quand burger activé */
-  }
-
-  .abibottiLogo {
-    display: none !important; /* cache le logo dans la barre du haut */
-  }
-
-  .mobile-only {
-    display: block;
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
-
 
 .studyhub {
   padding: 2rem;
@@ -189,19 +105,17 @@ p {
   color: var(--jaune);
 }
 
-@media (min-width: 769px) {
-  .nav-links {
-    display: flex;
-    list-style: none;
-    align-items: center;
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--background);
-    transition: color 0.2s ease;
-    gap: 1rem;
-    padding-top: 0.3rem;
-    margin: 0;
-  }
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--background);
+  transition: color 0.2s ease;
+  gap: 1rem;
+  padding-top: 0.3rem;
+  margin: 0;
 }
 .nav-item {
   display: flex;
@@ -288,13 +202,37 @@ p {
   filter: brightness(1.3) sepia(1.2) contrast(1.0) saturate(0.32) hue-rotate(2.0deg);
 }
 
-.hero p {
-  font-size: 1.8rem;
-  margin: 1.5rem 0;
-  color: var (--background);
-  font-weight: 600;
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
 }
 
+.hero p {
+  font-size: 1.3rem;
+  color: var(--vert);
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.6;
+}
+
+.hero .btn-start {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  background-color: var(--vert);
+  color: var(--blanche);
+  text-decoration: none;
+}
+
+.btn-start{
+  background-color: var(--vert) !important;
+  color: var(--blanche) !important;
+  border: 2px solid ;
+}
 
 /* ============================= */
 /* 📚 ABOUT SECTION             */
@@ -318,15 +256,42 @@ p {
 footer {
   background-color: var(--background);
   color: white;
-  text-align: center;
   padding: 2rem 1rem;
-  margin-top: 3rem;
+  text-align: center;
 }
 
+.container-footer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+footer .social-icons {
+  margin-top: 1rem;
+}
+
+footer .social-icons a {
+  font-size: 1.2rem;
+  margin: 0 0.5rem;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+footer .social-icons a:hover {
+  color: var(--jaune);
+}
 footer a {
   color: white;
   margin: 0 0.5rem;
   text-decoration: none;
+}
+
+footer a i {
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+footer a:hover i {
+  color: var(--jaune);
 }
 
 
@@ -349,7 +314,23 @@ footer a {
 
 
 
-/* study_hub stuff*/
+/* Main.html stuff*/
+
+.hero-text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--primary);
+  padding: 1rem;
+  width: 90%;
+  max-width: 800px;
+}
+
+
+
+/* Main.html stuff*/
 
 
 /* Studyhub ici affecte la page entiere*/
@@ -422,7 +403,27 @@ footer a {
   font-size: 1rem;
 }
 
-
+.selectors select {
+  appearance: none;                             /* Supprime le style natif */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  max-width: 600%;                             /* Limite la largeur */
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;             /* Padding avec espace pour l'icône */
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+  background-image: url("/assets");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
 .selectors select:focus {
   outline: none;
@@ -691,7 +692,7 @@ math-field#math-editor {
   margin-top: 1rem;
 }
 
-
+}
 html {
   scroll-behavior: smooth;
 }
