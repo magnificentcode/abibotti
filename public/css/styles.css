@@ -235,7 +235,7 @@ p {
   font-weight: 900;
   padding: 0.8rem 1.6rem;
   border-radius: 8px;
-  background-color: var(--bleu);
+  background-color: var(--vert-clair);
   color: var(--blanche);
   text-decoration: none;
 }
@@ -443,6 +443,10 @@ footer a:hover i {
   padding: 1rem;
   width: 90%;
   max-width: 800px;
+  background: rgba(255, 255, 255, 0.75); /* ✅ Fond flouté léger */
+  backdrop-filter: blur(8px);            /* ✅ Effet de flou */
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
 }
 
 
