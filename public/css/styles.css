@@ -2,26 +2,56 @@
 /* 🌿 VARIABLES GLOBALES         */
 /* ============================= */
 :root {
-  --background: #243010;
+  --vert: #243010;
   --highlight: #FFF9E6;
-  --accent: #E8B923;
+  --jaune: #E8B923;
   --primary: #243010;
-  --light: #ececec;
+  --blanche: #ececec;
   --font-main: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
 }
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  position: relative;
+  top: 0;
+}
+
+
+
+header {
+  position: relative;
+  top: 0;
+  z-index: 9999;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none;
+}
+
+
+.studyhub {
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+
+/* S'assure que le premier enfant n'ajoute pas d'espace */
 
 
 /* ============================= */
 /* 🌐 RESET & TYPOGRAPHIE        */
 /* ============================= */
-body {
-  margin: 0;
+body { 
   font-family: var(--font-main);
-  background-color: var(--light);
-  color: var(--primary);
+  background-color: var(--blanche);
+  color: var(--vert);
   font-size: 16px;
   line-height: 1.6;
   letter-spacing: 0.2px;
+  border: 2px solid red;
+  
 }
 
 h1, h2, h3 {
@@ -50,40 +80,60 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.2rem 2rem 0 2rem;
   margin-left: 2.5rem;
-  margin-right: 3.0rem;
-
-}
-.nav-home:hover {
-  color: var(--accent);
-}
-
-.nav-home {
-  display: flex;
+  margin-right: 3rem;
+  background-color: var(--blanche);
+  line-height: 1;
   gap: 1rem;
-  list-style: none;
+}
+
+
+.abibottiLogo {
+  font-size: 1.2rem;
+  line-height: 1.1;
+  padding-top: 0.2rem;
   align-items: center;
 }
-
-.nav-home a {
+.abibottiLogo a {
+  color: var(--vert);
   text-decoration: none;
-  font-weight: 600;
-  color: var(--background); /* ← vert foncé */
-  transition: color 0.2s ease;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1;
 }
-
+.abibottiLogo a:hover {
+  color: var(--jaune);
+}
 
 .nav-links {
   display: flex;
-  gap: 1rem;
   list-style: none;
   align-items: center;
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--background); /* ← vert foncé */
-    transition: color 0.2s ease;
-  }
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--background);
+  transition: color 0.2s ease;
+  gap: 1rem;
+  padding-top: 0.3rem;
+  margin: 0;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+.nav-links a,
+.nav-links .primary-btn {
+  line-height: 1;
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+}
 
 
 .nav-links li {
@@ -95,49 +145,41 @@ p {
 .nav-links a {
   text-decoration: none;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--vert);
   transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-  color: var(--accent);
+  color: var(--jaune);
 }
 
 
 /* ============================= */
 /* 🔘 BOUTONS                    */
 /* ============================= */
-.primary-btn-second ,
 
 .primary-btn {
-  background-color: var(--primary);
-  color: white;
-  padding: 0.4rem 1.2rem;
+  background-color: var(--vert);
+  color: var(--blanche) !important;
+  border: 2px solid var(--vert);
   margin-bottom: 2.5rem;
   border-radius: 8px;
   font-weight: 600;
-  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  font-size: 1rem;
-  height: 3rem;        /* fixe la hauteur */
-  box-sizing: border-box;
-}
+  box-sizing: border-box ;
+  height: 2.4rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
 
-.btn-start {
-  background-color: var(--primary);
-  color: var(--light);
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-}
+} 
 
-.btn-start:hover {
-  background-color: var(--accent);
-  color: var(--primary);
+
+.primary-btn:hover {
+  background-color: var(--jaune);     /* Fond jaune au survol */
+  color: var(--vert);                 /* Texte vert au survol */
 }
 
 
@@ -236,13 +278,10 @@ footer a {
   font-size: 2.0rem;
   letter-spacing:normal;
   margin-bottom: 1.4rem;
+
 }
 
-.studyhub {
-  padding: 2rem;
-  max-width: 600px;
-  margin: auto;
-}
+
 
 #content-area {
   opacity: 0;
@@ -587,37 +626,6 @@ math-field#math-editor {
   margin-top: 1rem;
 }
 
-
-
-body {
-  font-size: 16px;
-  line-height: 1.6;
-  letter-spacing: 0.2px;
-}
-
-h1, h2, h3 {
-  font-weight: 700;
-  color: var(--primary);
-  font-family: var(--font-main);
-  margin-bottom: 0.5em;
-}
-
-h1 {
-  font-size: 2rem;
-}
-
-h2 {
-  font-size: 1.6rem;
-}
-
-h3 {
-  font-size: 1.3rem;
-}
-p {
-  font-size: 1.05rem;
-  font-family: var(--font-main);
-  color: #243010;
-  margin-bottom: 1rem;
 }
 html {
   scroll-behavior: smooth;
