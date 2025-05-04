@@ -53,10 +53,7 @@ Tu es un générateur d’examens YO (baccalauréat finlandais). Crée une quest
   "steps": "Étapes ou structure de raisonnement"
 }
 
-Langue : **finnois**.
 
-Inspire-toi des vrais examens YO finlandais, sans inventer de styles d’examens inexistants.  
-Si "$topic" est vide ou inconnu, base-toi sur les tendances des 5 dernières années.
 ''';
 
     final res = await http.post(
