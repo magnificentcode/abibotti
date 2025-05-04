@@ -297,6 +297,67 @@ p {
   left: 0;
 }
 
+/* ✅ Ajout pour slogan sous le h1 */
+.tagline {
+  font-size: 1.1rem;
+  color: var(--bleu);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* ✅ Correction du texte de .hero */
+.hero p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--noir);
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+}
+
+/* ✅ Uniformisation du bouton .btn-start */
+.btn-start {
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  background-color: var(--rose);
+  color: var(--blanche);
+  text-decoration: none;
+  border: 2px solid var(--rose);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-start:hover {
+  background-color: var(--jaune);
+  color: white;
+  border-color: var(--jaune);
+}
+
+/* ✅ Mise en valeur des h2 */
+.about-abibotti h2 {
+  border-left: 4px solid var(--jaune);
+  padding-left: 0.75rem;
+  color: var(--bleu);
+  font-size: 1.9rem;
+  margin-top: 2.5rem;
+}
+
+/* ✅ Icônes + espacement dans les listes */
+.about-abibotti ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.about-abibotti ul li i {
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  color: var(--vert);
+}
+
 /* ============================= */
 /* 🔻 FOOTER                    */
 /* ============================= */
