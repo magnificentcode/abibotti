@@ -16,6 +16,9 @@ html, body {
   height: 100%;
   position: relative;
   top: 0;
+  background-color: var(--blanche);
+  color: var(--vert);
+  
 }
 
 
@@ -46,7 +49,6 @@ header {
 body { 
   font-family: var(--font-main);
   background-color: var(--blanche);
-  color: var(--vert);
   font-size: 16px;
   line-height: 1.6;
   letter-spacing: 0.2px;
@@ -55,7 +57,6 @@ body {
 
 h1, h2, h3 {
   font-weight: 700;
-  color: var(--background);
   font-family: var(--font-main);
   margin-bottom: 0.5em;
 }
@@ -67,8 +68,8 @@ h3 { font-size: 1.3rem; }
 p {
   font-size: 1.05rem;
   font-family: var(--font-main);
-  color: var(--background);
   margin-bottom: 1rem;
+  color: var(--vert);
 }
 
 
@@ -182,6 +183,15 @@ p {
 }
 
 
+
+
+/* ============================= */
+/* 📌 NAVIGATION / HEADER        */
+/* ============================= */
+
+
+
+
 /* ============================= */
 /* 🖼️ HERO                      */
 /* ============================= */
@@ -205,13 +215,13 @@ p {
 .hero h1 {
   font-size: 3rem;
   font-weight: 800;
-  color: var(--primary);
+  color: var(--vert) !important;
   letter-spacing: 0.5px;
   margin-bottom: 1rem;
 }
 
 .hero p {
-  font-size: 1.3rem;
+  font-size: 2.0rem;
   color: var(--vert);
   max-width: 700px;
   margin: 0 auto 1.5rem auto;
@@ -228,17 +238,26 @@ p {
   text-decoration: none;
 }
 
-.btn-start{
-  background-color: var(--vert) !important;
-  color: var(--blanche) !important;
-  border: 2px solid ;
+.btn-start {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 900;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  background-color: var(--vert);
+  color: var(--blanche);
+  text-decoration: none;
+  border: 2px solid var(--vert);
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-start:hover {
-  background-color: var(--jaune) !important;
-
+  background-color: var(--jaune);
+  color: var(--blanche);
+  border-color: var(--jaune);
 }
+
+
 
 /* ============================= */
 /* 📚 ABOUT SECTION             */
@@ -248,11 +267,13 @@ p {
   margin: 3rem auto;
   padding: 0 1rem;
   text-align: center;
+  color: var(--vert);
 }
 
 .about-abibotti ul {
   text-align: left;
   margin-top: 1rem;
+  color: var(--vert);
 }
 
 
@@ -260,8 +281,8 @@ p {
 /* 🔻 FOOTER                    */
 /* ============================= */
 footer {
-  background-color: var(--background);
-  color: white;
+  background-color: var(--blanche) !important;
+  color: var(--vert);
   text-align: center;
 }
 
@@ -272,12 +293,13 @@ footer {
 
 footer .social-icons {
   margin-top: 1rem;
+  color: var(--vert) !important;
 }
 
 footer .social-icons a {
   font-size: 1.2rem;
   margin: 0 0.5rem;
-  color: white;
+  color: var(--vert) !important;
   transition: color 0.3s ease;
 }
 
@@ -327,7 +349,7 @@ footer a:hover i {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: var(--primary);
+  color: var(--vert);
   padding: 1rem;
   width: 90%;
   max-width: 800px;
