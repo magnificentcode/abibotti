@@ -32,7 +32,12 @@
   <!-- Hero Section -->
   <section class="hero" data-aos="fade-up" style="padding: 0; margin: 0;">
     <div style="position: relative; text-align: center;">
-      <img src="/public/assets/img/Heros2.webp" alt="Abibotti Hero" style="width: 100%; border-radius: 2rem;">
+      <picture>
+        <source srcset="/assets/img/Heros2.webp" type="image/webp">
+        <img src="/assets/img/Heros2.jpg" alt="Abibotti Hero fallback"
+             loading="lazy"
+             style="width: 100%; border-radius: 2rem;">
+      </picture>
       <div style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); color: var(--background);">
         <h1 style="font-size: 2.5rem; font-weight: bold;">Tervetuloa Abibotille !</h1>
         <p style="font-size: 1.1rem;">Valitse aine, generoi yo-kysymys ja saat välittömän palautteen Clara-tekoälyltä.</p>
@@ -73,4 +78,4 @@
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>AOS.init();</script>
 </body>
-</html>
+</html> 
