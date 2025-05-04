@@ -5,11 +5,13 @@ function setCurrentQuestion(questionText) {
 }
 
 async function fetchQuestionFromBackend() {
-  const subject = document.getElementById("matiere").value;
-  const topic = document.getElementById("subject").value;
+  const subject = document.getElementById("matiere").value.trim();
+  const topic = document.getElementById("subject").value.trim();
   const loader = document.getElementById("loader");
   const box = document.getElementById("question-box");
   const contentArea = document.getElementById("content-area");
+
+  console.log("📤 Envoi à GPT avec :", { subject, topic });
 
   if (!subject || !topic) {
     alert("Valitse ensin oppiaine ja vuosi.");
@@ -28,6 +30,8 @@ async function fetchQuestionFromBackend() {
     });
 
     const text = await res.text();
+    console.log("📥 Réponse brute de /gpt:", text);
+
     const data = JSON.parse(text);
 
     if (res.status === 401) {
