@@ -220,7 +220,7 @@ p {
 
 .hero .btn-start {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 900;
   padding: 0.8rem 1.6rem;
   border-radius: 8px;
   background-color: var(--vert);
@@ -232,6 +232,12 @@ p {
   background-color: var(--vert) !important;
   color: var(--blanche) !important;
   border: 2px solid ;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-start:hover {
+  background-color: var(--jaune) !important;
+
 }
 
 /* ============================= */
@@ -256,7 +262,6 @@ p {
 footer {
   background-color: var(--background);
   color: white;
-  padding: 2rem 1rem;
   text-align: center;
 }
 
