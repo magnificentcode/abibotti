@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:convert' show utf8;
 
 Future<Response> onRequest(RequestContext context) async {
   final method = context.request.method;
@@ -28,32 +29,17 @@ Future<Response> onRequest(RequestContext context) async {
     }
 
     final prompt = '''
-Tu es un générateur d’examens YO (baccalauréat finlandais). Crée une question en "${subject}" dans le style officiel du YO, basée sur l’année ou le thème "${topic}".
-
-🧠 Exigences :
-- Sujet en **finnois**
-- Format inspiré des vrais examens
-- Si science → formules lisibles, unités SI
-- Si rédaction → donne contexte + consignes claires
-
-🎯 Cas particuliers :
-- "Suomi toisena kielenä" → rédaction avec 2–3 titres au choix
-- "Fysiikka" → problème de calcul ou schéma à analyser
-- "Biologia" → texte ou schéma + 1–3 sous-questions explicatives
-- "Historia" → document ou sujet argumenté à analyser
-- "Kemia" → exercice sur réactions ou calculs chimiques
-Réponds uniquement par un objet JSON brut sans aucun texte autour.
-⚠️ Réponds uniquement en JSON strict, comme ci-dessous :
+Tu es un expert YO. Génère une question en "$subject", inspirée de l’année "$topic".
+Corrige tous les caractères mal encodés et affiche les expressions mathematiques de maniere lisible. Ne genere pas des questions du types "Mikä merkittävä kansainvälinen tapahtuma tapahtui vuonna ...., ja miten se vaikutti maailmanlaajuisesti?". Réponds uniquement en JSON comme ceci :
 
 {
-  "question": "Texte de la question ici",
-  "level": "lyhyt / pitkä / helppo / keskitaso / vaikea",
-  "difficulty": "Facile / Moyen / Difficile",
-  "solution": "Modèle de réponse ou correction attendue",
-  "steps": "Étapes ou structure de raisonnement"
+  "question": "...",
+  "level": "...",
+  "difficulty": "...",
+  "solution": "...",
+  "steps": "..."
 }
-
-
+Langue : finnois.
 ''';
 
     final res = await http.post(
