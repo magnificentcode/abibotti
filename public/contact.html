@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta name="color-scheme" content="light">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abibotti | Tervetuloa</title>
+
+  <!-- Pico + Ton CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Z+RzD3E4FmG+SYEJb5PzHTnA3BBTV3dRUpWyO7eyEG7U0WTbHt0Bpj5fP2E6KxGQ+gx2gR06VgV+5wxvN9wI2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <nav class="navbar">
+      <strong class="abibottiLogo">
+        <a href="/main.html" >ABIBOTTI</a>
+      </strong>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="/studyhub.html">Yo-Koe</a></li>
+        <li class="nav-item"><a href="/contact.html">Ota yhteyttä</a></li>
+        <li class="nav-item"><a href="/login.html">Kirjaudu sisään</a></li>
+        <li class="nav-item"><a class="primary-btn" href="/signup.html">Aloita</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="contact" class="contact-section" data-aos="fade-up">
+      <h2>📬 Ota yhteyttä</h2>
+      <p>Onko sinulla kysymyksiä, ideoita tai haluatko palautetta? Lähetä meille viesti!</p>
+
+      <form action="mailto:contact@abibotti.fi" method="POST" enctype="text/plain">
+        <label for="name">Nimi</label>
+        <input type="text" id="name" name="Nimi" required placeholder="Etunimi Sukunimi" />
+
+        <label for="email">Sähköposti</label>
+        <input type="email" id="email" name="Sähköposti" required placeholder="esimerkki@email.com" />
+
+        <label for="message">Viesti</label>
+        <textarea id="message" name="Viesti" rows="6" required placeholder="Kirjoita viestisi tähän..."></textarea>
+
+        <button type="submit" class="primary-btn" style="background-color: rgb(17, 57, 17);">Lähetä viesti</button>
+      </form>
+
+      <p class="team-note">
+        ✉️ Tai ota suoraan yhteyttä tiimiin: <br />
+        <strong>Eliakim Omari</strong>, tuottaja – <a href="mailto:eliakim.omari@abibotti.fi">eliakim.omari@abibotti.online</a><br />
+        <strong>Henoc Argent</strong>, sisällöntuottaja – <a href="mailto:henoc.argent@abibotti.fi">henoc.argent@abibotti.online</a><br />
+        <strong>Emmanuel Batu</strong>, sisällöntuottaja – <a href="mailto:Emmanuel.batu@abibotti.fi">emmanuel.batu@abibotti.online</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container-footer">
+      <p>© 2025 Abibotti. Kaikki oikeudet pidätetään.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>AOS.init();</script>
+</body>
+</html>

@@ -819,3 +819,139 @@ html {
 }
 
 /* contact stuff*/
+
+/* 📬 Contact Section */
+
+.contact-section 
+textarea {
+  background-color: white;
+  color: var(--vert);
+  margin: 0 auto;
+  display: block;
+
+}
+.contact-section {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--highlight);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  align-items: center;
+}
+
+.contact-section h2 {
+  color: var(--vert);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.contact-section p {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--noir);
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-section label {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  color: var(--vert);
+  text-transform: uppercase;
+  margin: 0.5rem auto 0.25rem auto;
+  display: block;
+  width: 100%;
+  max-width: 600px;
+}
+
+.contact-section input,
+.contact-section textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: var(--vert);
+  max-width: 600px;
+}
+
+.contact-section textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.contact-section button.primary-btn {
+  align-self: start;
+  background-color: var(--rose);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-section button.primary-btn:hover {
+  background-color: var(--jaune);
+  color: white;
+}
+
+.team-note {
+  margin-top: 3rem;
+  color: var(--noir);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.contact-section textarea {
+  font-family: inherit;
+  font-size: 0.9rem; /* ou 0.85rem pour un effet plus petit */
+  background-color: white;
+  color: black;
+  resize: vertical;
+  min-height: 150px;
+}
+
+.contact-section input,
+.contact-section textarea {
+  margin: 0 auto;
+}
+
+
+/* contact stuff*/
+
+
+/* signup stuff*/
+
+.signup-section input {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  display: block;
+}
+.signup-section label {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--vert);
+  margin-bottom: 0.25rem;
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
