@@ -29,6 +29,7 @@ async function fetchQuestionFromBackend() {
 
     const text = await res.text();
     const data = JSON.parse(text);
+    console.log("📥 Reçu de GPT : ", data);
 
     if (res.status === 401) {
       alert("🚫 Accès non autorisé. Clé API invalide ou manquante.");

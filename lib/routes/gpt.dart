@@ -7,17 +7,18 @@ import 'dart:convert' show utf8;
 Future<Response> onRequest(RequestContext context) async {
   final method = context.request.method;
 
-  // GET pour test rapide
   if (method == HttpMethod.get) {
     return _jsonOk({'message': '✅ /gpt ready'});
   }
 
-  // OPTIONS (CORS preflight)
   if (method == HttpMethod.options) {
     return _cors(204);
   }
 
-  // POST
+  if (method != HttpMethod.post) {
+    return _jsonError("Méthode non autorisée", status: 405);
+  }
+
   try {
     final raw = await context.request.body();
     final json = jsonDecode(raw);
@@ -30,7 +31,7 @@ Future<Response> onRequest(RequestContext context) async {
 
     final prompt = '''
 Tu es un expert YO. Génère une question en "$subject", inspirée de l’année "$topic".
-Corrige tous les caractères mal encodés et affiche les expressions mathematiques de maniere lisible. Ne genere pas des questions du types "Mikä merkittävä kansainvälinen tapahtuma tapahtui vuonna ...., ja miten se vaikutti maailmanlaajuisesti?". Réponds uniquement en JSON comme ceci :
+Corrige tous les caractères mal encodés et affiche les expressions mathematiques de manière lisible. Réponds uniquement en JSON :
 
 {
   "question": "...",
@@ -65,9 +66,16 @@ Langue : finnois.
     final contentUtf8 = utf8.decode(res.bodyBytes);
     final rawOpenAI = jsonDecode(contentUtf8);
     final text = rawOpenAI['choices'][0]['message']['content'];
-    final parsed = jsonDecode(text);
 
+    final match = RegExp(r'{[\\s\\S]*?}').firstMatch(text);
+    if (match == null) {
+      return _jsonError("⚠️ Aucun JSON détecté", details: text);
+    }
+
+    final jsonOnly = match.group(0);
+    final parsed = jsonDecode(jsonOnly!);
     return _jsonOk(parsed);
+
   } catch (e) {
     return _jsonError("Erreur JSON ou API", details: e.toString());
   }
@@ -80,8 +88,8 @@ Response _jsonOk(Map<String, dynamic> body) => Response.json(
   headers: {'Access-Control-Allow-Origin': '*'},
 );
 
-Response _jsonError(String message, {String? details}) => Response.json(
-  statusCode: 500,
+Response _jsonError(String message, {String? details, int status = 500}) => Response.json(
+  statusCode: status,
   body: {
     'error': '❌ $message',
     if (details != null) 'details': details,

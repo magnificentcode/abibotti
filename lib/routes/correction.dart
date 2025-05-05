@@ -65,7 +65,17 @@ Vastaa vain suomeksi.
     );
 
     final utf8Content = utf8.decode(response.bodyBytes);
-    final parsed = jsonDecode(jsonDecode(utf8Content)['choices'][0]['message']['content']);
+    final rawDecoded = jsonDecode(utf8Content);
+final choices = rawDecoded['choices'];
+if (choices == null || choices.isEmpty) {
+  return _jsonError("Réponse GPT invalide", details: utf8Content);
+}
+final content = choices[0]['message']['content'];
+final match = RegExp(r'{[\\s\\S]*?}').firstMatch(content);
+if (match == null) {
+  return _jsonError("⚠️ JSON non détecté dans la réponse GPT", details: content);
+}
+final parsed = jsonDecode(match.group(0)!);
 
     final translated = {
       'note': parsed['Arvosana'],
@@ -105,3 +115,4 @@ Response _jsonError(String message, {String? details}) {
     headers: {'Access-Control-Allow-Origin': '*'},
   );
 }
+

@@ -28,6 +28,16 @@ Future<Response> onRequest(RequestContext context) async {
       );
     }
 
+    final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+if (!emailRegex.hasMatch(email)) {
+  return Response.json(
+    statusCode: 400,
+    body: {'message': 'Adresse email invalide.'},
+  );
+}
+
+
+
     final result = await db.query(
       'SELECT id, email, password FROM users WHERE email = @email',
       substitutionValues: {'email': email},
