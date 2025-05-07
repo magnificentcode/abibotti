@@ -1,15 +1,23 @@
 import 'package:dart_frog/dart_frog.dart';
 
-Handler middleware(Handler handler) {
-  return handler.use(
-    provider<ResponseContext>(
-      (context) => ResponseContext(
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-          'Access-Control-Allow-Headers': '*',
-        },
-      ),
-    ),
-  );
-}
+Middleware cors = (handler) {
+  return (context) async {
+    if (context.request.method == HttpMethod.options) {
+      return Response(statusCode: 200, headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': '*',
+      });
+    }
+
+    final response = await handler(context);
+    return response.copyWith(
+      headers: {
+        ...response.headers,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': '*',
+      },
+    );
+  };
+};
