@@ -67,8 +67,10 @@ Käytä lainausmerkkejä oikein, jotta JSON on koneellisesti luettavissa.
       }),
     );
     if (response.statusCode != 200) {
-  return _jsonError("Erreur OpenAI (${response.statusCode})", details: utf8Content);
+  print("❌ OpenAI error: ${response.statusCode} ${response.body}");
+  return _jsonError("Erreur OpenAI (${response.statusCode})", details: response.body);
 }
+    
 
     final utf8Content = utf8.decode(response.bodyBytes);
     final rawDecoded = jsonDecode(utf8Content);

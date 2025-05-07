@@ -31,13 +31,19 @@ async function fetchQuestionFromBackend() {
 
     let data;
     try {
-  data = JSON.parse(text);
-        } catch (e) {
-  console.error("❌ Format JSON invalide reçu de GPT :", text);
-  alert("GPT ei palauttanut kunnollista JSONia.");
-  return;
-}
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("❌ Format JSON invalide reçu de GPT :", text);
+      alert("GPT ei palauttanut kunnollista JSONia.");
+      return;
+    }
     console.log("📥 Reçu de GPT JSON :", JSON.stringify(data, null, 2));
+
+    // Déplacement du bloc après la réception de la réponse GPT
+    let rawQuestion = data.question;
+    if (typeof rawQuestion === "object") {
+      rawQuestion = JSON.stringify(rawQuestion, null, 2);
+    }
 
     if (res.status === 401) {
       alert("🚫 Accès non autorisé. Clé API invalide ou manquante.");
@@ -49,11 +55,12 @@ async function fetchQuestionFromBackend() {
     } else {
       box.innerHTML = `
         <h3>YO (${data.difficulty || "??"})</h3>
-        <p><strong>Kysymys :</strong><br>${data.question.replace(/\n/g, "<br>")}</p>
+        <p><strong>Kysymys :</strong><br>${rawQuestion.replace(/\n/g, "<br>")}</p>
       `;
+      // Appel juste après le bloc box.innerHTML
+      setCurrentQuestion(rawQuestion);
       box.style.display = "block";
       contentArea.classList.add("show");
-      setCurrentQuestion(data.question);
     }
   } catch (err) {
     alert("❌ Erreur lors de la requête.");
