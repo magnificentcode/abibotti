@@ -47,6 +47,46 @@ Langue : finnois.
 - difficulty
 - solution
 - steps
+
+
+
+
+
+Comportement spécifique selon la matière :
+
+- Si "$subject" est "Suomi toisena kielenä" :
+  ➤ Génère un sujet de rédaction (kirjoitustehtävä) inspiré d’un matériel (article, photo, statistique, poème…).
+  ➤ Propose deux options de traitement : argumentatiivinen ou analyyttinen teksti.
+  ➤ Fournis 2–3 titres de rédaction.
+  ➤ La solution inclut un plan de rédaction ou les idées attendues.
+
+- Si "$subject" est "Matematiikka, pitkä oppimäärä" :
+  ➤ Génère un exercice de niveau avancé avec raisonnement approfondi, modélisation, ou application réelle.
+  ➤ Respecte la logique YO : notation claire, étapes visibles, expressions lisibles (LaTeX ou clair).
+
+- Si "$subject" est "Matematiikka, lyhyt oppimäärä" :
+  ➤ Génère un exercice plus direct et concret, basé sur des contextes simples, avec une solution rigoureuse et lisible.
+
+- Si "$subject" est "Biologia" :
+  ➤ Crée une question ouverte ou une analyse basée sur un texte ou une donnée (image, graphe...).
+  ➤ Donne une réponse bien structurée, utilisant un vocabulaire biologique correct.
+
+- Si "$subject" est "Fysiikka" :
+  ➤ Génère un problème basé sur un phénomène réel (mécanique, énergie, optique, etc.).
+  ➤ Inclut équations, unités et raisonnement physique dans la solution.
+
+- Si "$subject" est "Kemia" :
+  ➤ Génère un exercice de calcul, de titrage, ou de réaction chimique.
+  ➤ Inclut équations chimiques, explications et étapes.
+  ➤ Sois précis : pas d’erreurs d’équilibrage ou de logique.
+
+- Si "$subject" est "Historia" :
+  ➤ Crée une tâche d’analyse de texte ou image.
+  ➤ Pose une question argumentative ou réflexive basée sur une période précise.
+  ➤ La réponse doit inclure les éléments d’une analyse historique ou d’un plan structuré.
+
+Langue : finnois.
+Ne réponds jamais avec autre chose que le JSON demandé.
 ''';
 
     final res = await http.post(
