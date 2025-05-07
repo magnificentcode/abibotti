@@ -28,7 +28,15 @@ async function fetchQuestionFromBackend() {
     });
 
     const text = await res.text();
-    const data = JSON.parse(text);
+
+    let data;
+    try {
+  data = JSON.parse(text);
+        } catch (e) {
+  console.error("❌ Format JSON invalide reçu de GPT :", text);
+  alert("GPT ei palauttanut kunnollista JSONia.");
+  return;
+}
     console.log("📥 Reçu de GPT JSON :", JSON.stringify(data, null, 2));
 
     if (res.status === 401) {
@@ -41,7 +49,7 @@ async function fetchQuestionFromBackend() {
     } else {
       box.innerHTML = `
         <h3>YO (${data.difficulty || "??"})</h3>
-        <p><strong>Kysymys :</strong> ${data.question}</p>
+        <p><strong>Kysymys :</strong><br>${data.question.replace(/\n/g, "<br>")}</p>
       `;
       box.style.display = "block";
       contentArea.classList.add("show");

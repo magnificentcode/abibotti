@@ -13,11 +13,13 @@ Future<Response> onRequest(RequestContext context) async {
   }
 
   try {
-    final body = await context.request.body();
-    final data = jsonDecode(body);
+  final body = await context.request.body();
+  print("📨 Requête reçue sur /correction");
+  print("📦 Corps brut reçu : $body");
 
-    final question = data['question'];
-    final reponse = data['reponse'];
+  final data = jsonDecode(body);
+  final question = data['question'];
+  final reponse = data['reponse'];
 
     if (question == null || question.toString().trim().isEmpty ||
         reponse == null || reponse.toString().trim().isEmpty) {
@@ -40,12 +42,13 @@ Arvioi vastaus kysymyksen perusteella. Tarkista:
 
 Palauta seuraavassa JSON-muodossa:
 {
-  "Arvosana": "x/10",
+  "Arvosana": " /10",
   "Korjaus": "Korjattu versio oppilaan vastauksesta",
   "Palaute": "Palaute ja parannusehdotukset"
 }
 
 Vastaa vain suomeksi.
+Käytä lainausmerkkejä oikein, jotta JSON on koneellisesti luettavissa.
 ''';
 
     final response = await http.post(
@@ -63,6 +66,9 @@ Vastaa vain suomeksi.
         'temperature': 0.7,
       }),
     );
+    if (response.statusCode != 200) {
+  return _jsonError("Erreur OpenAI (${response.statusCode})", details: utf8Content);
+}
 
     final utf8Content = utf8.decode(response.bodyBytes);
     final rawDecoded = jsonDecode(utf8Content);
@@ -123,4 +129,6 @@ Response _jsonError(String message, {String? details}) {
     headers: {'Access-Control-Allow-Origin': '*'},
   );
 }
+
+
 
