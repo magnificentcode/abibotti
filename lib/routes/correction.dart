@@ -71,11 +71,19 @@ if (choices == null || choices.isEmpty) {
   return _jsonError("Réponse GPT invalide", details: utf8Content);
 }
 final content = choices[0]['message']['content'];
-final match = RegExp(r'{[\\s\\S]*?}').firstMatch(content);
+print('🧪 Contenu brut reçu : $content');
+
+final match = RegExp(r'\{[\s\S]*?\}').firstMatch(content);
 if (match == null) {
   return _jsonError("⚠️ JSON non détecté dans la réponse GPT", details: content);
 }
-final parsed = jsonDecode(match.group(0)!);
+
+late Map<String, dynamic> parsed;
+try {
+  parsed = jsonDecode(match.group(0)!);
+} catch (e) {
+  return _jsonError("Erreur lors du parsing JSON", details: "$e\nContenu brut : $content");
+}
 
     final translated = {
       'note': parsed['Arvosana'],
