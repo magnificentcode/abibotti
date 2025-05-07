@@ -74,20 +74,22 @@ Langue : finnois.
     final text = rawOpenAI['choices'][0]['message']['content'];
 
     final match = RegExp(r'{[\s\S]*}').firstMatch(text);
-    if (!parsed.containsKey("question")) {
-  return _jsonError("⚠️ JSON incomplet ou malformé", details: text);
-}
+    if (match == null) {
+      return _jsonError("⚠️ Aucun JSON détecté", details: text);
+    }
 
     final jsonOnly = match.group(0);
     final parsed = jsonDecode(jsonOnly!);
-    return _jsonOk(parsed);
 
+    if (!parsed.containsKey("question")) {
+      return _jsonError("⚠️ JSON incomplet ou malformé", details: text);
+    }
+
+    return _jsonOk(parsed);
   } catch (e) {
     return _jsonError("Erreur JSON ou API", details: e.toString());
   }
 }
-
-// ✅ Helpers
 
 Response _jsonOk(Map<String, dynamic> body) => Response.json(
   body: body,
