@@ -41,6 +41,12 @@ Corrige tous les caractères mal encodés et affiche les expressions mathematiqu
   "steps": "..."
 }
 Langue : finnois.
+⚠️ Important : tu dois toujours répondre exactement en JSON, sans texte autour, et inclure les champs :
+- question
+- level
+- difficulty
+- solution
+- steps
 ''';
 
     final res = await http.post(
@@ -67,10 +73,10 @@ Langue : finnois.
     final rawOpenAI = jsonDecode(contentUtf8);
     final text = rawOpenAI['choices'][0]['message']['content'];
 
-    final match = RegExp(r'{[\\s\\S]*?}').firstMatch(text);
-    if (match == null) {
-      return _jsonError("⚠️ Aucun JSON détecté", details: text);
-    }
+    final match = RegExp(r'{[\s\S]*}').firstMatch(text);
+    if (!parsed.containsKey("question")) {
+  return _jsonError("⚠️ JSON incomplet ou malformé", details: text);
+}
 
     final jsonOnly = match.group(0);
     final parsed = jsonDecode(jsonOnly!);
