@@ -7,6 +7,13 @@ import '../../database.dart';
 final jwtSecret = const String.fromEnvironment('JWT_SECRET');
 
 Future<Response> onRequest(RequestContext context) async {
+  if (context.request.method == HttpMethod.options) {
+  return Response(statusCode: 200, headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': '*',
+  });
+}
   if (context.request.method == HttpMethod.post) {
     if (jwtSecret.isEmpty) {
       return Response.json(

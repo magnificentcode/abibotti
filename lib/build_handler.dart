@@ -5,6 +5,7 @@ import 'package:mime/mime.dart';
 import 'routes/gpt.dart' as gpt;
 import 'routes/correction.dart' as correction;
 import 'middleware/auth_middleware.dart';
+import 'middleware/cors.dart';
 
 Future<Handler> buildHandler() async {
   final router = Router()
@@ -12,6 +13,7 @@ Future<Handler> buildHandler() async {
     ..post('/correction', correction.onRequest);
 
   return Pipeline()
+      .addMiddleware(cors)
       .addMiddleware(_logMiddleware())
       .addHandler((context) async {
         final path = context.request.uri.path;

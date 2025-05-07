@@ -4,6 +4,7 @@
 
 import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
+import 'middleware/cors.dart';
 import 'package:mime/mime.dart'; // pour détecter le Content-Type automatiquement si besoin
 import 'routes/gpt.dart' as gpt;
 import 'routes/correction.dart' as correction;
