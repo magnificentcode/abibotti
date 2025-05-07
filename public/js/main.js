@@ -41,7 +41,7 @@ async function fetchQuestionFromBackend() {
     } else {
       box.innerHTML = `
         <h3>YO (${data.difficulty || "??"})</h3>
-        <p><strong>Kysymys :</strong> ${data.question}</p>
+        <p><strong>Kysymys :</strong><br>${data.question.replace(/\n/g, "<br>")}</p>
       `;
       box.style.display = "block";
       contentArea.classList.add("show");
