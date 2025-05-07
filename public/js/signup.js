@@ -12,7 +12,7 @@ document.getElementById('signup-form').addEventListener('submit', async function
       'confirm-password': form['confirm-password'].value
     };
   
-    const res = await fetch('https://postgres:oJGgtyUSnuQDxnqoXmUAbzdpqjaPuNLy@ballast.proxy.rlwy.net:55624/railway.up.railway.app/signup', {
+    const res = await fetch('https://abibotti-production.up.railway.app/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
