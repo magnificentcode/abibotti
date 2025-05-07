@@ -2,6 +2,9 @@ document.getElementById('signup-form').addEventListener('submit', async function
     e.preventDefault();
   
     const form = e.target;
+    const submitButton = form.querySelector("button[type=submit]");
+        submitButton.disabled = true;
+        submitButton.textContent = "Rekisteröidään...";
     const data = {
       fullname: form.fullname.value,
       email: form.email.value,
@@ -23,6 +26,8 @@ document.getElementById('signup-form').addEventListener('submit', async function
       errorDiv.textContent = result.message || 'Virhe tapahtui.';
     } else {
       localStorage.setItem('token', result.token);
+      submitButton.disabled = false;
+      submitButton.textContent = "Rekisteröidy";
       window.location.href = '/dashboard.html';
     }
   });   

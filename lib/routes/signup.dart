@@ -19,7 +19,7 @@ Future<Response> onRequest(RequestContext context) async {
     final data = jsonDecode(body);
 
     final fullName = data['fullname'];
-    final email = data['email'];
+    final email = data['email']?.toLowerCase().trim();
     final password = data['password'];
     final confirmPassword = data['confirm-password'];
 
