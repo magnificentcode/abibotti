@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Tervetuloa Abibotin käyttäjäalueelle. Harjoittele yo-kokeita, tarkastele palautettasi ja jatka opiskelua tekoälyn avulla.">
+  <meta name="keywords" content="yo-koe, abibotti, tekoäly, opiskelutili, harjoittelu, yo-harjoitus, palautetyökalu, opiskelija, suomi">
+  <meta name="author" content="Abibotti tiimi">
+  <meta property="og:title" content="Abibotti – Oma opiskelutili">
+  <meta property="og:description" content="Harjoittele yo-kokeita ja seuraa edistymistäsi Clara-tekoälyn avulla.">
+  <meta property="og:image" content="/assets/img/Heros2.jpg">
+  <meta property="og:url" content="https://www.abibotti.online/dashboard.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abibotti | Oma opiskelutilisi</title>
+
+  <!-- Pico + Ton CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Z+RzD3E4FmG+SYEJb5PzHTnA3BBTV3dRUpWyO7eyEG7U0WTbHt0Bpj5fP2E6KxGQ+gx2gR06VgV+5wxvN9wI2g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <nav class="navbar">
+      <strong class="abibottiLogo">
+        <a href="/main.html" >ABIBOTTI</a>
+      </strong>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="/studyhub.html">Yo-Koe</a></li>
+        <li class="nav-item"><a href="/contact.html">Ota yhteyttä</a></li>
+        <li class="nav-item"><a href="#" onclick="logout()">Kirjaudu ulos</a></li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <main class="container" style="margin-top: 2rem; text-align: center;">
+    <h2 class="head welcome-text">Tervetuloa takaisin!</h2>
+    <p>Olet nyt kirjautunut sisään. Aloita harjoittelu painamalla alla olevaa nappia:</p>
+
+    <a href="/studyhub.html" class="primary-btn dashboard-start-btn">Aloita harjoittelu</a>
+
+    <p style="margin-top: 2rem; font-size: 0.9rem; color: gray;">Jos et ole sinä, <a href="#" onclick="logout()" style="color: var(--rose);">kirjaudu ulos</a>.</p>
+  </main>
+
+
+    <!-- Footer -->
+  <footer>
+    <div class="container-footer">
+      <p>© 2025 Abibotti. Kaikki oikeudet pidätetään.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "/login.html";
+    }
+    </script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>AOS.init();</script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
