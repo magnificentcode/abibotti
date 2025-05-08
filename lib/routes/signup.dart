@@ -67,7 +67,7 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
 
-    final userId = int.parse(insertResult.first['id'].toString());x
+    final userId = int.parse(insertResult.first['id'].toString());
 
     final jwt = JWT(
   {
@@ -81,8 +81,6 @@ final token = jwt.sign(
   SecretKey(jwtSecret),
   expiresIn: const Duration(hours: 2), // ✅ ici, pas dans JWT()
 );
-
-    final token = jwt.sign(SecretKey(jwtSecret));
 
     return Response.json(
       statusCode: 201,
