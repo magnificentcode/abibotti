@@ -67,16 +67,20 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
 
-    final userId = insertResult.first['id'];
+    final userId = int.parse(insertResult.first['id'].toString());x
 
     final jwt = JWT(
-      {
-        'userId': userId,
-        'email': email,
-        'role': 'user',
-      },
-      maxAge: const Duration(hours: 2),
-    );
+  {
+    'userId': userId,
+    'email': email,
+    'role': 'user',
+  },
+);
+
+final token = jwt.sign(
+  SecretKey(jwtSecret),
+  expiresIn: const Duration(hours: 2), // ✅ ici, pas dans JWT()
+);
 
     final token = jwt.sign(SecretKey(jwtSecret));
 
