@@ -30,4 +30,4 @@ document.getElementById('signup-form').addEventListener('submit', async function
       submitButton.textContent = "Rekisteröidy";
       window.location.href = '/dashboard.html';
     }
-  });   
+  });  
