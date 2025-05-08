@@ -59,7 +59,7 @@ Future<Response> onRequest(RequestContext context) async {
     final hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
     final insertResult = await db.query(
-      'INSERT INTO users (full_name, email, password) VALUES (@fullName, @email, @password) RETURNING id',
+      'INSERT INTO users (full_name, email, password) VALUES (@fullName, @email, @password) RETURNING id::int',
       substitutionValues: {
         'fullName': fullName,
         'email': email,
@@ -67,8 +67,7 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
 
-    final rawId = insertResult.first['id'];
-    final userId = rawId is int ? rawId : int.parse(rawId.toString());
+    final userId = insertResult.first['id'];
     final jwt = JWT(
   {
     'userId': userId,
