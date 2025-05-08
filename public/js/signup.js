@@ -24,6 +24,8 @@ document.getElementById('signup-form').addEventListener('submit', async function
     if (!res.ok) {
       errorDiv.style.display = 'block';
       errorDiv.textContent = result.message || 'Virhe tapahtui.';
+      submitButton.disabled = false;
+      submitButton.textContent = "Rekisteröidy";
     } else {
       localStorage.setItem('token', result.token);
       submitButton.disabled = false;
