@@ -67,8 +67,8 @@ Future<Response> onRequest(RequestContext context) async {
       },
     );
 
-    final userId = int.parse(insertResult.first['id'].toString());
-    final userId = insertResult.first['id'] as int;
+    final rawId = insertResult.first['id'];
+    final userId = rawId is int ? rawId : int.parse(rawId.toString());
     final jwt = JWT(
   {
     'userId': userId,
